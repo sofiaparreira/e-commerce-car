@@ -10,13 +10,13 @@ export default function Register() {
 
 
     const handleRegister = (e) => {
-        e.preventDefault()
+      e.preventDefault()
 
-        try {
-            
-        } catch (error) {
-            
-        }
+      try {
+          
+      } catch (error) {
+          
+      }
     }
 
 
@@ -44,7 +44,7 @@ export default function Register() {
                 </label>
                 <div className="mt-2">
                   <input
-                    onChange={(e) = setName(e.target.value)}
+                    onChange={(e) => setName(e.target.value)}
                     id="email"
                     name="email"
                     type="email"
@@ -60,7 +60,7 @@ export default function Register() {
                 </label>
                 <div className="mt-2">
                   <input
-                    onChange={(e) = setEmail(e.target.value)}
+                    onChange={(e) => setEmail(e.target.value)}
                     id="email"
                     name="email"
                     type="email"
@@ -80,7 +80,7 @@ export default function Register() {
                 </div>
                 <div className="mt-2">
                   <input
-                    onChange={(e) = setPassword(e.target.value)}
+                    onChange={(e) => setPassword(e.target.value)}
 
                     id="password"
                     name="password"
