@@ -1,16 +1,39 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     try {
-    } catch (error) {}
+      const response = await axios.post('http://localhost:3000/auth/login', {
+        email,
+        password
+      });
+  
+      const data = response.data;
+      console.log(data); 
+  
+      localStorage.setItem('token', data.token);
+  
+      console.log('User Role:', data.role); 
+  
+      if (data.role === "admin") {
+        navigate('/admin');
+      } else {
+        navigate('/');
+      }
+  
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
+    }
   };
+  
 
   return (
     <>
@@ -27,7 +50,7 @@ export default function Login() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form onSubmit={handleLogin} method="POST" className="space-y-6">
+          <form onSubmit={handleLogin} className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -68,11 +91,6 @@ export default function Login() {
                   className="block w-full rounded-md outline-none px-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
                 />
               </div>
-            </div>
-
-            <div className="space-x-4 text-gray-700">
-              <input type="radio" />
-              <span>Sou Administrador</span>
             </div>
 
             <div>

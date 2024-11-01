@@ -1,16 +1,31 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState('user'); // Estado para armazenar o papel
+  const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
 
     try {
-    } catch (error) {}
+      await axios.post('http://localhost:3000/auth/register', {
+        name: name,
+        email: email,
+        password: password,
+        role, // Inclui o papel no envio da requisição
+      });
+
+      navigate("/login");
+    } catch (error) {
+      console.error('Erro durante o registro', error);
+      setError(error.response?.data?.error || 'Erro ao registrar');
+    }
   };
 
   return (
@@ -28,10 +43,11 @@ export default function Register() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
+          {error && <p className="text-red-600">{error}</p>} {/* Exibe erro se houver */}
+          <form onSubmit={handleRegister} method="POST" className="space-y-6">
             <div>
               <label
-                htmlFor="email"
+                htmlFor="name"
                 className="block text-sm/6 font-medium text-gray-900"
               >
                 Full Name
@@ -39,15 +55,15 @@ export default function Register() {
               <div className="mt-2">
                 <input
                   onChange={(e) => setName(e.target.value)}
-                  id="email"
-                  name="email"
-                  type="email"
+                  id="name"
+                  name="name"
+                  type="text"
                   required
-                  autoComplete="email"
-                  className="block w-full outline-none rounded-md border-0 py-1.5   text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
+                  className="block w-full outline-none rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
                 />
               </div>
             </div>
+
             <div>
               <label
                 htmlFor="email"
@@ -63,7 +79,7 @@ export default function Register() {
                   type="email"
                   required
                   autoComplete="email"
-                  className="block w-full outline-none rounded-md border-0 py-1.5   text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
+                  className="block w-full outline-none rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -85,14 +101,31 @@ export default function Register() {
                   type="password"
                   required
                   autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 outline-none  text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
+                  className="block w-full rounded-md border-0 py-1.5 outline-none px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
                 />
               </div>
             </div>
 
             <div className="space-x-4 text-gray-700">
-              <input type="radio" />
-              <span>Sou Administrador</span>
+              <input 
+                type="radio" 
+                id="admin" 
+                name="role" 
+                value="admin" 
+                checked={role === 'admin'} 
+                onChange={() => setRole('admin')} 
+              />
+              <label htmlFor="admin">Sou Administrador</label>
+              
+              <input 
+                type="radio" 
+                id="user" 
+                name="role" 
+                value="user" 
+                checked={role === 'user'} 
+                onChange={() => setRole('user')} 
+              />
+              <label htmlFor="user">Sou Usuário</label>
             </div>
 
             <div>
