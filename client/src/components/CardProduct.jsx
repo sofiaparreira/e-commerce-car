@@ -10,7 +10,7 @@ const CardProduct = () => {
             <p className='text-xl text-zinc-900 mt-8 font-semibold'>R$ 300.000</p>
         </div>
 
-        <button className='bg-red-600 mx-8 rounded-xl mb-4 px-32 py-2'>Adicionar ao carrinho</button>
+        <button className='bg-red-600 mx-8 rounded-xl mb-4 px-24 py-2'>Adicionar ao carrinho</button>
       
     </div>
   )

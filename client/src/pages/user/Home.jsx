@@ -13,7 +13,6 @@ const Home = () => {
         className="relative flex-col flex  justify-center bg-cover bg-center xl:aspect-[16/7] aspect-[16/10] py-32"
         style={{ backgroundImage: `url(${banner1})` }}
       >
-        {/* Gradiente: preto com opacidade 80 no topo, opacidade 50 no meio e opacidade 80 na parte inferior */}
         <div
           className="absolute inset-0"
           style={{
