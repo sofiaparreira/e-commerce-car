@@ -9,9 +9,9 @@ const ShoppingCart = () => {
       <section className="py-24 relative">
         <div className="w-full max-w-6xl px-4 md:px-5 lg:px-6 mx-auto">
           <h2 className="title font-bold text-3xl leading-10 mb-8 text-zinc-900">
-            Shopping Cart
+            Meu Carrinho
           </h2>
-          <div className="rounded-xl border-2 border-gray-200 p-4 lg:p-8 grid grid-cols-12 mb-8 max-lg:max-w-lg max-lg:mx-auto gap-y-4">
+          <div className="rounded-lg border-2 border-gray-200 p-4 lg:p-8 grid grid-cols-12 mb-8 max-lg:max-w-lg max-lg:mx-auto gap-y-4">
             <div className="col-span-12 lg:col-span-2 img box">
               <img
                 src="https://pagedone.io/asset/uploads/1701162826.png"
@@ -21,7 +21,7 @@ const ShoppingCart = () => {
             </div>
             <div className="col-span-12 lg:col-span-10 detail w-full lg:pl-3">
               <div className="flex items-center justify-between w-full mb-4">
-                <h5 className="font-bold text-2xl leading-9 text-gray-900">
+                <h5 className="font-medium text-lg leading-9 text-gray-900">
                   Round White Portable Speaker
                 </h5>
                 <button className="rounded-full group flex items-center justify-center focus-within:outline-red-500">
@@ -48,14 +48,12 @@ const ShoppingCart = () => {
                   </svg>
                 </button>
               </div>
-              <p className="font-normal text-base leading-7 text-gray-500 mb-6">
+              <p className="font-normal text-sm leading-7 text-gray-500 mb-6">
                 Introducing our sleek round white portable speaker, the epitome
                 of style and sound! Elevate your auditory experience with this
                 compact yet powerful device that delivers crystal-clear audio
                 wherever you go.{" "}
-                <a href="#" className="text-red-600">
-                  More....
-                </a>
+               
               </p>
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-4">
@@ -103,15 +101,15 @@ const ShoppingCart = () => {
                     </svg>
                   </button>
                 </div>
-                <h6 className="text-red-600 font-bold text-2xl leading-9 text-right">
-                  $220
+                <h6 className="text-red-600 font-bold text-xl leading-9 text-right">
+                  R$ 220
                 </h6>
               </div>
             </div>
           </div>
           {/* Repeat for other items in the cart */}
           <div className="flex flex-col md:flex-row items-center justify-between lg:px-6 pb-6 border-b border-gray-200 max-lg:max-w-lg max-lg:mx-auto">
-            <h5 className="text-gray-900 font-semibold text-2xl leading-9 w-full max-md:text-center max-md:mb-4">
+            <h5 className="text-gray-900 font-semibold text-xl leading-9 w-full max-md:text-center max-md:mb-4">
               Subtotal
             </h5>
             <div className="flex items-center justify-between gap-5 ">
