@@ -26,7 +26,7 @@ const Product = sequelize.define('Product', {
         }
     },
     power: {
-        type: DataTypes.INT,
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     engine: {
