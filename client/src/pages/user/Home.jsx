@@ -5,6 +5,8 @@ import banner1 from '../../assets/banner1.jpg'
 import CardProduct from '../../components/CardProduct'
 
 const Home = () => {
+
+  
   return (
     <div className='bg-white text-gray-900'>
       <NavBar />
