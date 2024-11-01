@@ -5,6 +5,7 @@ import DropdownWithSearch from "../../components/Menususp";
 import InputDefault from "../../components/InputDefault";
 import Label from "../../components/Label";
 
+
 export default function AddProject() {
   const [model, setModel] = useState("");
   const [brand, setBrand] = useState("");
@@ -20,6 +21,12 @@ export default function AddProject() {
   const years = Array.from({ length: 85 }, (_, index) => currentYear - index);
 
   return (
+    <>
+    <div className="m-8 ">
+    <Link to='/' className="rounded-full bg-red-100 w-8 h-8 flex justify-center items-center">
+        <svg  xmlns="http://www.w3.org/2000/svg" height="14" width="8.75" viewBox="0 0 320 512"><path className="fill-red-600" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
+    </Link>
+    </div>
     <form className="mx-8 sm:mx-20 lg:mx-48 my-16">
       <h2 className="text-xl border-b border-red-600 pb-4 font-semibold text-gray-900">
         Adicionar Produto
@@ -174,5 +181,6 @@ export default function AddProject() {
         </button>
       </div>
     </form>
+    </>
   );
 }
