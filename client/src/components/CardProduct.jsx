@@ -2,15 +2,15 @@ import React from 'react'
 
 const CardProduct = () => {
   return (
-    <div className='bg-zinc-100 text-white'>
-        <img src="" alt="" />
+    <div className='bg-white text-white rounded-xl'>
+        <img className='rounded-2xl' src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Lamborghini_Si%C3%A1n_IAA_2019_JM_1094.jpg" alt="" />
         <div className='p-8'>
             <h2 className='text-2xl text-zinc-800 font-medium first-letter:uppercase'>Porche 101</h2>
             <p className='text-gray-600 first-letter:uppercase'>marca</p>
-            <p className='text-xl text-red-600 mt-8'>R$ 300.000</p>
+            <p className='text-xl text-zinc-900 mt-8 font-semibold'>R$ 300.000</p>
         </div>
 
-        <button className='bg-red-600 w-full py-2'>Adicionar ao carrinho</button>
+        <button className='bg-red-600 mx-8 rounded-xl mb-4 px-32 py-2'>Adicionar ao carrinho</button>
       
     </div>
   )

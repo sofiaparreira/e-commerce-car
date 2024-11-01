@@ -7,7 +7,7 @@ import CardProduct from '../../components/CardProduct'
 const HomeAdmin = () => {
   return (
     <div className='bg-white text-gray-900'>
-    
+      <NavBar />
 
       <div className="relative flex-col flex items-center justify-center bg-cover bg-center aspect-[16/6]" style={{ backgroundImage: `url(${banner1})` }}>
       
