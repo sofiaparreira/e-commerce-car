@@ -34,30 +34,37 @@ router.post("/register", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        const { email, password } = req.body
+        const { email, password } = req.body;
 
+        // Verifique se o email e a senha foram fornecidos
         if (!email || !password) {
-            return res.status(400).json({ error: "Email and password are required" })
+            return res.status(400).json({ error: "Email and password are required" });
         }
 
-        const userRegistered = await User.findOne({ where: { email } })
+        // Busque o usuário pelo email
+        const userRegistered = await User.findOne({ where: { email } });
         if (!userRegistered) {
-            return res.status(400).json({ error: "Email not found" }) // Adicione o return aqui
+            return res.status(400).json({ error: "Email not found" });
         }
 
-        const isValidPassword = await bcrypt.compare(password, userRegistered.password) // Corrigido para userRegistered
+        // Verifique se a senha está correta
+        const isValidPassword = await bcrypt.compare(password, userRegistered.password);
         if (!isValidPassword) {
-            return res.status(400).json({ error: "Invalid password" })
+            return res.status(400).json({ error: "Invalid password" });
         }
 
-        const token = jwt.sign({ id: userRegistered.id, role: userRegistered.role }, 'secret', { expiresIn: '3h' }) // Corrigido para userRegistered
-        res.status(200).json({ token })
+        // Crie o token, incluindo o role
+        const token = jwt.sign({ id: userRegistered.id, role: userRegistered.role }, 'secret', { expiresIn: '3h' });
+
+        // Retorne o token e o role
+        res.status(200).json({ token, role: userRegistered.role }); // Inclua o role na resposta
 
     } catch (error) {
-        console.error('Erro ao logar', error.message)
-        res.status(500).json({ error: 'Erro ao logar' })
+        console.error('Erro ao logar', error.message);
+        res.status(500).json({ error: 'Erro ao logar' });
     }
-})
+});
+
 
 
 

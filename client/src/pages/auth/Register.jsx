@@ -6,7 +6,7 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState('user'); // Estado para armazenar o papel
+  const [role, setRole] = useState('user'); 
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
@@ -18,7 +18,7 @@ export default function Register() {
         name: name,
         email: email,
         password: password,
-        role, // Inclui o papel no envio da requisição
+        role, 
       });
 
       navigate("/login");
@@ -43,7 +43,7 @@ export default function Register() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          {error && <p className="text-red-600">{error}</p>} {/* Exibe erro se houver */}
+          {error && <p className="text-red-600">{error}</p>} 
           <form onSubmit={handleRegister} method="POST" className="space-y-6">
             <div>
               <label

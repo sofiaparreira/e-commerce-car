@@ -17,15 +17,23 @@ export default function Login() {
       });
   
       const data = response.data;
-      console.log(data); 
+      console.log('Response from API:', data); // Verifique a resposta completa
+  
+      if (!data.token) {
+        console.error('Token não encontrado na resposta.');
+        return;
+      }
   
       localStorage.setItem('token', data.token);
   
-      console.log('User Role:', data.role); 
+      // Verifique a estrutura da resposta e ajuste conforme necessário
+      console.log('User Role:', data.role); // Agora isso deve funcionar corretamente
   
       if (data.role === "admin") {
+        console.log('Navegando para /admin');
         navigate('/admin');
       } else {
+        console.log('Navegando para /');
         navigate('/');
       }
   
@@ -37,7 +45,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="flex h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
+      <div className="flex h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             alt="Your Company"
@@ -66,7 +74,7 @@ export default function Login() {
                   type="email"
                   required
                   autoComplete="email"
-                  className="block w-full outline-none px-2 rounded-md border-0 py-1.5  text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
+                  className="block w-full outline-none px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-zinc-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
                 />
               </div>
             </div>
