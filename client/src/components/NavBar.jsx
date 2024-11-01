@@ -21,7 +21,7 @@ const NavBar = () => {
   const NAVBAR_ADMIN = [{ id: 1, path: "/", name: "Home" }];
 
   return (
-    <nav class="bg-zinc-100 fixed z-20 w-full text-black flex justify-between px-8 2xl:px-32 py-6 items-center">
+    <nav class="bg-zinc-100 shadow fixed z-20 w-full text-black flex justify-between px-8 2xl:px-32 py-6 items-center">
       
       <ul className="flex md:gap-16 gap-8 items-center">
         <li>
@@ -31,7 +31,7 @@ const NavBar = () => {
 
       <ul className="flex gap-12 items-center">
         <li>
-          <Link>
+          <Link to='/carrinho'>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="20"

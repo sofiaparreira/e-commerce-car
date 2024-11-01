@@ -4,12 +4,16 @@ import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
 import HomeAdmin from './pages/admin/HomeAdmin'
 import AddProject from './pages/admin/AddProject'
+import ShoppingCart from './pages/user/ShoppingCart'
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/carrinho" element={<ShoppingCart />} />
+
+
         <Route path="/admin" element={<HomeAdmin />} />
         <Route path="/admin/add" element={<AddProject />} />
 
