@@ -5,21 +5,17 @@ const Product = sequelize.define('Product', {
     id: {
         primaryKey: true,
         allowNull: false,
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        autoIncrement: true
     },
-    
     model: {
         type: DataTypes.STRING,
         allowNull: false
     },
-
     brand: {
         type: DataTypes.STRING,
         allowNull: false
-
-
     },
-
     year: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -27,9 +23,7 @@ const Product = sequelize.define('Product', {
             isInt: true,
             min: 1886,
             max: new Date().getFullYear()
-
         }
-
     },
     power: {
         type: DataTypes.STRING,
@@ -38,24 +32,23 @@ const Product = sequelize.define('Product', {
     engine: {
         type: DataTypes.STRING,
         allowNull: false
-
-
-    }, 
+    },
     description: {
         type: DataTypes.STRING,
         allowNull: true
-
-    }, 
-
+    },
     image: {
         type: DataTypes.STRING,
         allowNull: true
- 
-
+    },
+    price: {
+        type: DataTypes.DOUBLE,
+        allowNull: false
+    },
+    quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
+});
 
-
-})
-
-
-module.exports = Product
+module.exports = Product;
