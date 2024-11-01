@@ -25,9 +25,9 @@ const DropdownWithSearch = () => {
   );
 
   return (
-    <div className="relative w-60">
+    <div className="relative w-full">
       <div 
-        className="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer text-gray-700 text-sm hover:bg-gray-50 transition duration-200 ease-in-out"
+        className="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer text-gray-700 text-sm hover:bg-gray-50 transition duration-200 ease-in-out "
         onClick={toggleDropdown}
       >
         {selectedBrand}

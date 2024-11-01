@@ -1,6 +1,6 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 import DropdownWithSearch from "../../components/Menususp";
 
 export default function AddProject() {
@@ -19,22 +19,20 @@ export default function AddProject() {
 
   return (
     <form className="mx-8 sm:mx-20 lg:mx-48 my-16">
-      <div className="space-y-12">
-        <div className="border-b border-red-600 pb-4">
-          <h2 className="text-xl font-semibold text-gray-900">
-            Adicionar Produto
-          </h2>
-        </div>
+      <h2 className="text-xl border-b border-red-600 pb-4 font-semibold text-gray-900">
+        Adicionar Produto
+      </h2>
 
-        <div className="border-b border-gray-900/10 pb-16">
-          <div className="sm:col-span-4">
-            <label
-              htmlFor="model"
-              className="block text-sm/6 font-medium text-gray-900"
-            >
-              Modelo
-            </label>
-            <div className="mt-2">
+      <div  className="grid grid-cols-4 gap-y-6 gap-x-8 mt-4 border-b border-gray-900/10 pb-16">
+
+             <div className="sm:col-span-4">
+              <label
+                htmlFor="model"
+                className="block text-sm/6 font-medium text-gray-900 mb-2"
+              >
+                Modelo
+              </label>
+
               <input
                 id="model"
                 name="model"
@@ -44,39 +42,54 @@ export default function AddProject() {
                 className="block px-2 outline-none w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
               />
             </div>
-          </div>
 
-          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-            <div className="sm:col-span-5">
+            <div className="sm:col-span-3">
               <label
                 htmlFor="brand"
-                className="block text-sm/6 font-medium text-gray-900"
+                className="block text-sm/6 font-medium text-gray-900 mb-2"
               >
                 Marca
               </label>
-              <div className="mt-2">
-              <DropdownWithSearch/>
-              </div>
+              <DropdownWithSearch />
+            </div>
+
+
+            <div className="sm:col-span-2">
+              <label
+                htmlFor="engine"
+                className="block text-sm/6 font-medium text-gray-900 mb-2"
+              >
+                Motor
+              </label>
+
+              <input
+                id="engine"
+                name="engine"
+                type="text"
+                value={engine}
+                onChange={(e) => setEngine(e.target.value)}
+                className="block px-2 outline-none w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
+              />
             </div>
 
             <div className="sm:col-span-2">
               <label
-                htmlFor="price"
-                className="block text-sm/6 font-medium text-gray-900"
+                htmlFor="power"
+                className="block text-sm/6 font-medium text-gray-900 mb-2"
               >
-                Quantidade
+                Potência
               </label>
-              <div className="mt-2">
-                <input
-                  id="quantity"
-                  name="quantity"
-                  type="text"
-                  value={quantity}
-                  onChange={(e) => setQuantity(e.target.value)}
-                  className="block px-2 outline-none w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
-                />
-              </div>
+
+              <input
+                id="power"
+                name="power"
+                type="text"
+                value={power}
+                onChange={(e) => setPower(e.target.value)}
+                className="block px-2 outline-none w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
+              />
             </div>
+
 
             <div className="sm:col-span-1">
               <label
@@ -101,15 +114,14 @@ export default function AddProject() {
               </div>
             </div>
 
-  
             <div className="sm:col-span-1">
               <label
                 htmlFor="price"
-                className="block text-sm/6 font-medium text-gray-900"
+                className="block text-sm/6 font-medium text-gray-900 mb-2" 
               >
                 Valor
               </label>
-              <div className="mt-2">
+
                 <input
                   id="price"
                   name="price"
@@ -118,51 +130,32 @@ export default function AddProject() {
                   onChange={(e) => setPrice(e.target.value)}
                   className="block px-2 outline-none w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
                 />
-              </div>
+        
             </div>
 
-         
 
-            {/* Outras entradas */}
-            <div className="sm:col-span-3">
+            <div className="grid grid-cols-4 sm:col-span-3">
+            <div className="sm:col-span-1">
               <label
-                htmlFor="engine"
-                className="block text-sm/6 font-medium text-gray-900"
+                htmlFor="price"
+                className="block text-sm/6 font-medium text-gray-900 mb-2"
               >
-                Motor
+                Quantidade
               </label>
-              <div className="mt-2">
+       
                 <input
-                  id="engine"
-                  name="engine"
+                  id="quantity"
+                  name="quantity"
                   type="text"
-                  value={engine}
-                  onChange={(e) => setEngine(e.target.value)}
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
                   className="block px-2 outline-none w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
                 />
-              </div>
             </div>
+          </div>
 
-            <div className="sm:col-span-3">
-              <label
-                htmlFor="power"
-                className="block text-sm/6 font-medium text-gray-900"
-              >
-                Potência
-              </label>
-              <div className="mt-2">
-                <input
-                  id="power"
-                  name="power"
-                  type="text"
-                  value={power}
-                  onChange={(e) => setPower(e.target.value)}
-                  className="block px-2 outline-none w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
-                />
-              </div>
-            </div>
 
-            <div className="col-span-full">
+          <div className="col-span-full">
               <label
                 htmlFor="description"
                 className="block text-sm/6 font-medium text-gray-900"
@@ -179,7 +172,6 @@ export default function AddProject() {
                   onChange={(e) => setDescription(e.target.value)}
                 />
               </div>
-              
             </div>
 
             <div className="col-span-full">
@@ -195,7 +187,7 @@ export default function AddProject() {
                     aria-hidden="true"
                     className="mx-auto h-12 w-12 text-gray-300"
                   />
-                  <div className="mt-4 flex text-sm/6 text-gray-600">
+                  <div className="mt-6 flex text-sm/6 text-gray-600">
                     <label
                       htmlFor="file-upload"
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
@@ -216,14 +208,21 @@ export default function AddProject() {
                   </p>
                 </div>
               </div>
-            </div>
-  
+        
           </div>
-        </div>
-      </div>
+
+
+
+      </div> {/* grid end */}
+
+
 
       <div className="mt-6 flex items-center justify-end gap-x-12">
-        <Link to='/admin' type="button" className="text-sm/6 font-semibold text-gray-900">
+        <Link
+          to="/admin"
+          type="button"
+          className="text-sm/6 font-semibold text-gray-900"
+        >
           Cancel
         </Link>
         <button
@@ -233,8 +232,6 @@ export default function AddProject() {
           Save
         </button>
       </div>
-
-
     </form>
   );
 }
