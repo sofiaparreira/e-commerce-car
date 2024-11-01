@@ -54,4 +54,50 @@ router.post("/add", async (req, res) => {
 });
 
 
+router.delete("/delete/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        const product = await Product.destroy({where: { id }})
+
+        if(!product) {
+            return res.status(404).json({ error: "Product not found"})
+        }
+        res.status(200).json({ message:  "Product deleted sucessfully" })
+
+    } catch (error) {
+        console.error("Error  deleting product", error);
+        return res.status(500).json({ error: "Error deleting product" })
+
+    }
+})
+
+router.put("/update/:id", async (req, res) => {
+    try {
+        const { id } = req.params
+        const { model, brand, year,  power, price, description, engine, image, quantity } = req.body
+
+        if (!model || !brand || !year || !power || !price || !description || !engine || !image || !quantity) {
+            return res.status(400).json({ error: "Preencha todos os campos" })
+        }
+
+        const product = await Product.findByPk(id)
+        if(!product) {
+            return res.status(404).json({ error: "Product not found" })
+        }
+
+        await Product.update(
+            { model, brand, year, power, price,  description, engine, image, quantity },
+            {  where: { id } }
+        )
+        
+        res.status(200).json({ message: "Product updated sucessfully"})
+       
+
+    } catch (error) {
+        console.error("Error updating product", error)
+        return res.status(500).json({ error: "Error updating product" })
+    }
+})
+
+
 module.exports = router;
