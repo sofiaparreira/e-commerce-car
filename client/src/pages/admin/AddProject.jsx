@@ -1,6 +1,7 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { Link } from 'react-router-dom'
+import DropdownWithSearch from "../../components/Menususp";
 
 export default function AddProject() {
   const [model, setModel] = useState("");
@@ -54,19 +55,7 @@ export default function AddProject() {
                 Marca
               </label>
               <div className="mt-2">
-                <select
-                  id="brand"
-                  value={brand}
-                  onChange={(e) => setBrand(e.target.value)}
-                  className="block outline-none w-full px-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm/6"
-                >
-                  <option value="">Selecione a marca</option>
-                  <option value="Marca 1">Nissan</option>
-                  <option value="Marca 2">Volkswagen</option>
-                  <option value="Marca 3">Porche</option>
-                  <option value="Marca 3">McLaren</option>
-                  <option value="Marca 3">Marca</option>
-                </select>
+              <DropdownWithSearch/>
               </div>
             </div>
 
@@ -228,6 +217,7 @@ export default function AddProject() {
                 </div>
               </div>
             </div>
+  
           </div>
         </div>
       </div>

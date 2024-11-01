@@ -27,7 +27,7 @@ const DropdownWithSearch = () => {
   return (
     <div className="relative w-60">
       <div 
-        className="px-4 py-2 bg-white border border-gray-300 rounded-lg shadow-sm cursor-pointer text-gray-700 font-semibold hover:bg-gray-50 transition duration-200 ease-in-out"
+        className="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer text-gray-700 text-sm hover:bg-gray-50 transition duration-200 ease-in-out"
         onClick={toggleDropdown}
       >
         {selectedBrand}
@@ -37,7 +37,7 @@ const DropdownWithSearch = () => {
         <div className="absolute left-0 w-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
           <input
             type="text"
-            className="w-full px-4 py-2 border-b border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 rounded-t-lg"
+            className="w-full text-sm px-4 py-2 border-b border-gray-200 text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500 rounded-t-lg"
             placeholder="Pesquisar marca..."
             value={searchTerm}
             onChange={handleSearchChange}
@@ -47,7 +47,7 @@ const DropdownWithSearch = () => {
               filteredBrands.map((brand) => (
                 <li
                   key={brand}
-                  className="px-4 py-2 text-gray-700 hover:bg-indigo-100 cursor-pointer transition-colors duration-150 ease-in-out"
+                  className="px-4 py-2 text-sm text-gray-700 hover:bg-red-100 cursor-pointer transition-colors duration-150 ease-in-out"
                   onClick={() => handleSelectBrand(brand)}
                 >
                   {brand}
