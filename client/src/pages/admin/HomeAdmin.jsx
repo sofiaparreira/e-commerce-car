@@ -20,6 +20,8 @@ const HomeAdmin = () => {
     }
     fetchProducts()
   }, [])
+
+  
   return (
     <div className='bg-white text-gray-900'>
       <NavBar />

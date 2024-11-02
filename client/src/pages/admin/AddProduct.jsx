@@ -11,11 +11,13 @@ export default function AddProduct() {
   const [brand, setBrand] = useState("");
   const [year, setYear] = useState(new Date().getFullYear());
   const [price, setPrice] = useState(0.0);
-  const [image, setImage] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [description, setDescription] = useState("");
   const [power, setPower] = useState("");
   const [engine, setEngine] = useState("");
+  const [images, setImages] = useState([]);          
+  const [imagePreviews, setImagePreviews] = useState([]);
+
 
   const navigate = useNavigate()
 
@@ -51,12 +53,23 @@ export default function AddProduct() {
     }
   }
 
-  const handleImageChange = (file) => {
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImage(reader.result);
-    };
-    reader.readAsDataURL(file); 
+  const handleImageChange = async (files) => {
+    const filesArray = Array.from(files);
+    const base64Images = await Promise.all(filesArray.map(file => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(file);
+      });
+    }));
+    setImages(base64Images);
+    const previews = base64Images; 
+    setImagePreviews(previews);
+  };
+
+  const removeImage = (index) => {
+    setImages(images.filter((_, i) => i !== index));
+    setImagePreviews(imagePreviews.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (e) => {
@@ -72,7 +85,7 @@ export default function AddProduct() {
       brand,
       year: Number(year),
       price: Number(price),
-      image,
+      images,
       quantity: Number(quantity),
       description,
       power: Number(power),
@@ -81,6 +94,8 @@ export default function AddProduct() {
     console.log(product)
     addProduct(product);
   };
+
+  
   
 
 
@@ -200,14 +215,25 @@ export default function AddProduct() {
 
         <div className="col-span-full">
           <Label htmlFor={"cover-photo"} text={"Foto do produto"} />
-
-          <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+        <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+          {imagePreviews?.length > 0 ? (
+            <div className="text-center">
+              <img src={imagePreviews} alt="Pré-visualização" className="mx-auto h-48 w-48 object-cover" />
+              <button
+                type="button"
+                onClick={removeImage}
+                className="mt-4 text-red-600 hover:underline"
+              >
+                Remover imagem
+              </button>
+            </div>
+          ) : (
             <div className="text-center">
               <PhotoIcon
                 aria-hidden="true"
                 className="mx-auto h-12 w-12 text-gray-300"
               />
-              <div className="mt-6 flex text-sm/6 text-gray-600">
+              <div className="mt-6 flex text-sm text-gray-600">
                 <label
                   htmlFor="file-upload"
                   className="relative cursor-pointer rounded-md bg-white font-semibold text-red-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-red-600 focus-within:ring-offset-2 hover:text-red-500"
@@ -217,15 +243,17 @@ export default function AddProduct() {
                     id="file-upload"
                     name="file-upload"
                     type="file"
+                    multiple
                     className="sr-only"
-                    onChange={(e) => handleImageChange(e.target.files[0])} 
+                    onChange={(e) => handleImageChange(e.target.files)}
                   />
                 </label>
                 <p className="pl-1">ou arraste e solte</p>
               </div>
-              <p className="text-xs/5 text-gray-600">PNG, JPG, GIF até 10MB</p>
+              <p className="text-xs text-gray-600">PNG, JPG, GIF até 10MB</p>
             </div>
-          </div>
+          )}
+        </div>
         </div>
       </div>{" "}
       {/* grid end */}
