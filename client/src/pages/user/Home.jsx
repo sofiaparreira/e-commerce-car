@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from 'react'
 import NavBar from "../../components/NavBar";
 import { Link } from "react-router-dom";
 import banner1 from "../../assets/banner1.jpg";
 import CardProduct from "../../components/CardProduct";
 
 const Home = () => {
+
+  const [products, setProducts] = useState([])
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/products')
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error('Erro ao buscar produto', error)
+      }
+    }
+    fetchProducts()
+  }, [])
+
   return (
     <div className="bg-zinc-200 text-gray-900">
       <NavBar />
@@ -44,7 +60,10 @@ const Home = () => {
         </p>
 
         <div className="mt-16 grid grid-cols-3 gap-16">
-          <CardProduct />
+        {products.map(product => (
+              <CardProduct key={product.id} product={product}/>
+            ))}
+
         </div>
       </section>
     </div>
