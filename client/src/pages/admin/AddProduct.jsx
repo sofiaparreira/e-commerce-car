@@ -1,12 +1,12 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DropdownWithSearch from "../../components/Menususp";
 import InputDefault from "../../components/InputDefault";
 import Label from "../../components/Label";
 
 
-export default function AddProject() {
+export default function AddProduct() {
   const [model, setModel] = useState("");
   const [brand, setBrand] = useState("");
   const [year, setYear] = useState(new Date().getFullYear());
@@ -17,13 +17,59 @@ export default function AddProject() {
   const [power, setPower] = useState("");
   const [engine, setEngine] = useState("");
 
+  const navigate = useNavigate()
+
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 85 }, (_, index) => currentYear - index);
+
+  async function addProduct(productData) {
+    try {
+      const formData = new FormData();
+      Object.entries(productData).forEach(([key, value]) => {
+        formData.append(key, value);
+      });
+
+      const response = await fetch("http://localhost:3000/products/add", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("Produto adicionado", result);
+        navigate('/admin'); // Navega para a página admin após sucesso
+      } else {
+        console.error("Erro ao adicionar produto", result.error);
+      }
+    } catch (error) {
+      console.error("Erro ao fazer a requisição:", error);
+    }
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const product = {
+      model,
+      brand,
+      year,
+      price,
+      image,
+      quantity,
+      description,
+      power,
+      engine,
+    };
+
+    addProduct(product);
+  };
+
 
   return (
     <>
     <div className="m-8 ">
-    <Link to='/' className="rounded-full bg-red-100 w-8 h-8 flex justify-center items-center">
+    <Link to='/admin' className="rounded-full bg-red-100 w-8 h-8 flex justify-center items-center">
         <svg  xmlns="http://www.w3.org/2000/svg" height="14" width="8.75" viewBox="0 0 320 512"><path className="fill-red-600" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
     </Link>
     </div>

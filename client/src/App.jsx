@@ -3,7 +3,7 @@ import Home from './pages/user/Home'
 import Register from './pages/auth/Register'
 import Login from './pages/auth/Login'
 import HomeAdmin from './pages/admin/HomeAdmin'
-import AddProject from './pages/admin/AddProject'
+import AddProject from './pages/admin/AddProduct'
 import ShoppingCart from './pages/user/ShoppingCart'
 
 function App() {

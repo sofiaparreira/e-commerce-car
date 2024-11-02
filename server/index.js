@@ -9,7 +9,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/auth/', authRoutes)
-app.use(productRoutes)
+app.use('/products', productRoutes)
 
 
 
