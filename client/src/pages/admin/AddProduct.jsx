@@ -28,17 +28,21 @@ export default function AddProduct() {
       Object.entries(productData).forEach(([key, value]) => {
         formData.append(key, value);
       });
+      console.log(...formData.entries());
 
       const response = await fetch("http://localhost:3000/products/add", {
         method: "POST",
-        body: formData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(productData),
       });
 
       const result = await response.json();
 
       if (response.ok) {
         console.log("Produto adicionado", result);
-        navigate('/admin'); // Navega para a página admin após sucesso
+        navigate('/admin'); 
       } else {
         console.error("Erro ao adicionar produto", result.error);
       }
@@ -47,23 +51,37 @@ export default function AddProduct() {
     }
   }
 
+  const handleImageChange = (file) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImage(reader.result);
+    };
+    reader.readAsDataURL(file); 
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
+    if (!model || !brand || !year || !price || !quantity || !description || !power || !engine) {
+      alert("Por favor, preencha todos os campos obrigatórios.");
+      return;
+    }
+  
     const product = {
       model,
       brand,
-      year,
-      price,
+      year: Number(year),
+      price: Number(price),
       image,
-      quantity,
+      quantity: Number(quantity),
       description,
-      power,
+      power: Number(power),
       engine,
     };
-
+    console.log(product)
     addProduct(product);
   };
+  
 
 
   return (
@@ -97,7 +115,7 @@ export default function AddProduct() {
         <div className="sm:col-span-3">
           <Label htmlFor={"brand"} text={"Marca"} />
 
-          <DropdownWithSearch />
+          <DropdownWithSearch selectedBrand={brand} onSelectBrand={setBrand} />
         </div>
 
         <div className="sm:col-span-2">
@@ -115,7 +133,7 @@ export default function AddProduct() {
           <Label htmlFor={"power"} text={"Potência"} />
 
           <InputDefault
-            onChange={(e) => setPower(e.target.value)}
+            onChange={(e) => setPower(Number(e.target.value))}
             value={power}
             id={"power"}
             name={"power"}
@@ -145,7 +163,7 @@ export default function AddProduct() {
           <Label htmlFor={"price"} text={"Valor"} />
 
           <InputDefault
-            onChange={(e) => setPrice(e.target.value)}
+            onChange={(e) => setPrice(Number(e.target.value))}
             value={price}
             id={"price"}
             name={"price"}
@@ -157,7 +175,7 @@ export default function AddProduct() {
             <Label htmlFor={"price"} text={"Quantidade"} />
 
             <InputDefault
-              onChange={(e) => setQuantity(e.target.value)}
+              onChange={(e) => setQuantity(Number(e.target.value))}
               value={quantity}
               id={"quantity"}
               name={"quantity"}
@@ -200,7 +218,7 @@ export default function AddProduct() {
                     name="file-upload"
                     type="file"
                     className="sr-only"
-                    onChange={(e) => setImage(e.target.files[0])}
+                    onChange={(e) => handleImageChange(e.target.files[0])} 
                   />
                 </label>
                 <p className="pl-1">ou arraste e solte</p>
@@ -221,7 +239,8 @@ export default function AddProduct() {
         </Link>
         <button
           type="submit"
-          className="rounded-md bg-red-600 px-16 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+          onClick={handleSubmit}
+          className="rounded-md bg-red-600 px-16 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
         >
           Save
         </button>

@@ -5,17 +5,16 @@ const carBrands = [
   // Adicione mais marcas conforme necessário
 ];
 
-const DropdownWithSearch = () => {
+const DropdownWithSearch = ({ selectedBrand, onSelectBrand }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedBrand, setSelectedBrand] = useState('Selecione uma marca...');
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleSearchChange = (event) => setSearchTerm(event.target.value);
 
   const handleSelectBrand = (brand) => {
-    setSelectedBrand(brand);
+    onSelectBrand(brand);
     setIsOpen(false);
     setSearchTerm('');
   };
@@ -30,7 +29,7 @@ const DropdownWithSearch = () => {
         className="px-4 py-2 bg-white border border-gray-300 rounded-md shadow-sm cursor-pointer text-gray-700 text-sm hover:bg-gray-50 transition duration-200 ease-in-out "
         onClick={toggleDropdown}
       >
-        {selectedBrand}
+        {selectedBrand || "Selecione uma marca..."}
       </div>
 
       {isOpen && (
