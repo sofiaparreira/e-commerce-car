@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const authRoutes = require('./routes/AuthRoutes');
 const productRoutes = require('./routes/ProductRoutes');
+const ProductImage = require('./models/ProductImage')
 
 const app = express();
 app.use(cors());
@@ -11,6 +12,9 @@ app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use('/auth/', authRoutes)
 app.use('/products', productRoutes)
+
+
+
 
 
 
