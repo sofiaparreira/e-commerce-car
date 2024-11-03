@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from "../../components/NavBar";
 import { Link } from "react-router-dom";
-import banner1 from "../../assets/banner1.jpg";
+import banner1 from '../../assets/banner1.jpg'
+import banner2 from '../../assets/banner2.PNG'
+import banner3 from '../../assets/banner3.PNG'
+import banner4 from '../../assets/banner4.jpg'
+import banner5 from '../../assets/banner5.jpg'
+import banner6 from '../../assets/banner6.jpg'
+import banner7 from '../../assets/banner7.jpg'
 import CardProduct from "../../components/CardProduct";
 
 const Home = () => {
 
   const [products, setProducts] = useState([])
+  const [currentBanner, setCurrentBanner] = useState(0)
+
+  const banners = [banner1, banner2, banner3, banner4, banner5, banner6, banner7] 
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,13 +30,20 @@ const Home = () => {
     fetchProducts()
   }, [])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentBanner((prevBanner) => (prevBanner + 1) % banners.length)
+    }, 10000) // 1000 =1seg
+    return () => clearInterval(interval)
+  }, [banners.length])
+
   return (
     <div className="bg-zinc-200 text-gray-900">
       <NavBar />
 
       <div
         className="relative flex-col flex  justify-center bg-cover bg-center xl:aspect-[16/7] aspect-[16/10] py-32"
-        style={{ backgroundImage: `url(${banner1})` }}
+        style={{ backgroundImage: `url(${banners[currentBanner]})` }}>
       >
         <div
           className="absolute inset-0"
