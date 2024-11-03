@@ -88,5 +88,39 @@ router.delete('/:userId/:productId/delete', async (req, res) => {
     }
 })
 
+router.put('/:userId/:productId/update', async (req, res) => {
+    const { userId, productId } = req.params;
+    const { quantity } = req.body; // Extrair quantity do corpo da requisição
+
+    try {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const item = await ItemCart.findOne({ where: { userId, productId } }); // Alterar para productId
+        if (!item) {
+            return res.status(404).json({ error: 'Item not found in cart' });
+        }
+
+        // Atualizar a quantidade e o preço total
+        item.quantity = quantity;
+        const product = await Product.findByPk(productId); // Obter o produto para acessar o preço
+        if (!product) {
+            return res.status(404).json({ error: 'Product not found' });
+        }
+        
+        item.priceAll = quantity * product.price; // Atualizar o preço total
+        await item.save(); // Salvar as alterações
+
+        res.status(200).json({ message: "Item updated successfully" });
+
+    } catch (error) {
+        console.error("Error updating item in cart: ", error);
+        res.status(500).json({ message: 'Error updating item in cart' });
+    }
+});
+
+
 
 module.exports = router;
