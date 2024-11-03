@@ -69,13 +69,13 @@ const Home = () => {
         </div>
       </div>
 
-      <section className="px-40 py-16 bg-zinc-100">
+      <section className="px-44 py-16 bg-zinc-100">
         <h1 className="text-3xl font-medium">Carros</h1>
         <p className="text-gray-600 text-sm mt-1">
           Nossos melhores carros esportivos
         </p>
 
-        <div className="mt-16 grid grid-cols-3 gap-16">
+        <div className="mt-16 grid grid-cols-3 gap-32">
         {products.map(product => (
               <CardProduct key={product.id} product={product}/>
             ))}
