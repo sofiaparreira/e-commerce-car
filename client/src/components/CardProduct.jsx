@@ -2,7 +2,7 @@ import React from 'react'
 
 const CardProduct = ({ product }) => {
 
-   const firstImage = product.ProductImages && product.ProductImages.length > 0 ? product.ProductImages[0].url : product.image;
+   const firstImage = product.ProductImages && product.ProductImages.length > 0 ? product.ProductImages[product.ProductImages.length - 1].url : product.image;
   return (
     <div className='bg-white text-white rounded-xl'>
         <img className='rounded-2xl' src={firstImage} alt="product.model" />

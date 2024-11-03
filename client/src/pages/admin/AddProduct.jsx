@@ -62,9 +62,8 @@ export default function AddProduct() {
         reader.readAsDataURL(file);
       });
     }));
-    setImages(base64Images);
-    const previews = base64Images; 
-    setImagePreviews(previews);
+    setImages((prev) => [...prev, ...base64Images]);
+    setImagePreviews((prev) => [...prev, ...base64Images]);
   };
 
   const removeImage = (index) => {
@@ -216,16 +215,25 @@ export default function AddProduct() {
         <div className="col-span-full">
           <Label htmlFor={"cover-photo"} text={"Foto do produto"} />
         <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-          {imagePreviews?.length > 0 ? (
-            <div className="text-center">
-              <img src={imagePreviews} alt="Pré-visualização" className="mx-auto h-48 w-48 object-cover" />
-              <button
-                type="button"
-                onClick={removeImage}
-                className="mt-4 text-red-600 hover:underline"
-              >
-                Remover imagem
-              </button>
+            {imagePreviews?.length > 0 ? (
+              <div className="grid grid-cols-3 gap-4">
+              {imagePreviews.map((preview, index) => (
+                <div key={index} className="relative">
+                  <img src={preview} alt={`Pré-visualização ${index + 1}`} className="h-48 w-48 object-cover" />
+                  {index === 0 && (
+                    <span className="absolute top-1 left-1 bg-black text-white text-xs px-1 py-0.5 rounded">
+                      Foto principal
+                    </span>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="absolute top-1 right-1 text-red-600 hover:underline"
+                  >
+                    Remover
+                  </button>
+                </div>
+              ))}
             </div>
           ) : (
             <div className="text-center">
