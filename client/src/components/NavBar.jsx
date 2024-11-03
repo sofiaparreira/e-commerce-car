@@ -31,7 +31,7 @@ const NavBar = () => {
 
       <ul className="flex gap-12 items-center">
         <li>
-          <Link to='/carrinho'>
+          <Link to='/shoppingCart'>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="20"

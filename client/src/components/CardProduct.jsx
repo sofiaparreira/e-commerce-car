@@ -1,18 +1,29 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const CardProduct = ({ product }) => {
-  //consumindo o CartRoutes
+  // Função para adicionar ao carrinho
   const handleAddToCart = async () => {
     try {
       const response = await axios.post("http://localhost:3000/cart/add", {
-        userId: 1,
-        productId: product.id,
+        userId: 1, // Certifique-se de usar um userId válido
+        productId: product.id, // Certifique-se de que product.id seja válido
         quantity: 1,
       });
-      console.log(response.data.message);
+      console.log("Product added successfully:", response.data.message);
     } catch (error) {
-      console.error("Error adding product to cart: ", error.response.data);
+      // Tratamento de erros
+      if (error.response && error.response.data) {
+        console.error("Error adding product to cart:", error.response.data);
+        alert(`Error: ${error.response.data.message || "Unable to add to cart"}`);
+      } else if (error.request) {
+        console.error("Network error or server did not respond:", error.message);
+        alert("Network error: Could not connect to server.");
+      } else {
+        console.error("Unexpected error:", error.message);
+        alert("An unexpected error occurred.");
+      }
     }
   };
 
