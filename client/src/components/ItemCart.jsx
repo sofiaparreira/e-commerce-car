@@ -1,6 +1,6 @@
 import React from "react";
 
-const CardCartProduct = ({product}) => {
+const ItemCart = ({product}) => {
   return (
     <div className="rounded-lg border-2 border-gray-200 p-4 lg:p-8 grid grid-cols-12 mb-8 max-lg:max-w-lg max-lg:mx-auto gap-y-4">
       <div className="col-span-12 lg:col-span-2 img box">
@@ -99,4 +99,4 @@ const CardCartProduct = ({product}) => {
   );
 };
 
-export default CardCartProduct;
+export default ItemCart;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import CardCartProduct from "../../components/CardCartProduct";
+import ItemCart from "../../components/ItemCart";
 
 const ShoppingCart = () => {
-  const [quantity1, setQuantity1] = useState(2);
-  const [quantity2, setQuantity2] = useState(2);
+  const [itemsCart, setItemsCart ] = useState()
+  
 
   return (
     <div>
@@ -13,7 +13,7 @@ const ShoppingCart = () => {
             Meu Carrinho
           </h2>
 
-          <CardCartProduct />
+          <ItemCart />
 
 
           {/* Repeat for other items in the cart */}
