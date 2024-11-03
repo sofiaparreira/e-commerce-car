@@ -17,6 +17,26 @@ router.get("/", async (req, res) => {
     }
 })
 
+router.get("/:id", async (req, res) => {
+    try {
+        const productId = req.params.id;
+
+        const productWithImages = await Product.findOne({
+            where: { id: productId },
+            include: ProductImage
+        });
+
+        if (!productWithImages) {
+            return res.status(404).json({ error: "Produto não encontrado" });
+        }
+
+        res.status(200).json(productWithImages);
+    } catch (error) {
+        console.error("Error fetching product", error);
+        res.status(500).json({ error: "Erro ao buscar produto" });
+    }
+});
+
 router.get("/:id/images", async (req, res) => {
     try {
         const productId = req.params.id;

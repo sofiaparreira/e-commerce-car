@@ -1,11 +1,22 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom';
 
 const CardProduct = ({ product }) => {
+  const navigate = useNavigate();
+
+  const handleContextMenu = (e) => {
+    e.preventDefault(); 
+    navigate(`/admin/edit/${product.id}`); 
+  };
 
    const firstImage = product.ProductImages && product.ProductImages.length > 0 ? product.ProductImages[product.ProductImages.length - 1].url : product.image;
   return (
-    <div className='bg-white text-white rounded-xl'>
-        <img className='rounded-2xl' src={firstImage} alt="product.model" />
+    <div className='bg-white text-white rounded-xl' onClick={handleContextMenu}>
+        <img 
+          className="rounded-2xl w-248 h-248 object-cover object-center" 
+          src={firstImage} 
+          alt={product.model} 
+        />
         <div className='p-8'>
             <h2 className='text-2xl text-zinc-800 font-medium first-letter:uppercase'>{product.model}</h2>
             <p className='text-gray-600 first-letter:uppercase'>{product.brand}</p>

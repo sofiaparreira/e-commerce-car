@@ -5,6 +5,7 @@ import Login from './pages/auth/Login'
 import HomeAdmin from './pages/admin/HomeAdmin'
 import AddProject from './pages/admin/AddProduct'
 import ShoppingCart from './pages/user/ShoppingCart'
+import EditProduct from './pages/admin/EditProduct'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
 
         <Route path="/admin" element={<HomeAdmin />} />
         <Route path="/admin/add" element={<AddProject />} />
+        <Route path="/admin/edit/:id" element={<EditProduct />} />
 
 
         <Route path="/register" element={<Register />} />

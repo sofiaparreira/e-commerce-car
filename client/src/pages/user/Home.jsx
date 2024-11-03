@@ -44,7 +44,7 @@ const Home = () => {
       <div
         className="relative flex-col flex  justify-center bg-cover bg-center xl:aspect-[16/7] aspect-[16/10] py-32"
         style={{ backgroundImage: `url(${banners[currentBanner]})` }}>
-      >
+      
         <div
           className="absolute inset-0"
           style={{
