@@ -6,6 +6,8 @@ import HomeAdmin from './pages/admin/HomeAdmin'
 import AddProject from './pages/admin/AddProduct'
 import ShoppingCart from './pages/user/ShoppingCart'
 import EditProduct from './pages/admin/EditProduct'
+import Payment from './pages/user/Payment'
+
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/shoppingCart" element={<ShoppingCart />} />
+        <Route path="/payment" element={<Payment />} />
+
 
 
         <Route path="/admin" element={<HomeAdmin />} />
