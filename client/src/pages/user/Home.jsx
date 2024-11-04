@@ -75,7 +75,7 @@ const Home = () => {
           Nossos melhores carros esportivos
         </p>
 
-        <div className="mt-16 grid grid-cols-3 gap-32">
+        <div className="mt-16 grid grid-cols-3 gap-16">
         {products.map(product => (
               <CardProduct key={product.id} product={product}/>
             ))}
