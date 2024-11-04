@@ -44,7 +44,7 @@ const CardProduct = ({ product }) => {
       onClick={handleContextMenu}
     >
       <img
-        className="rounded-2xl object-cover object-center w-96"
+        className="rounded-2xl object-cover object-center h-72 w-full"
         src={firstImage}
         alt={product.model}
       />
