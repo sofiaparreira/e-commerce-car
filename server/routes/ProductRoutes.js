@@ -126,7 +126,7 @@ router.put("/update/:id", async (req, res) => {
         const { id } = req.params;
         const { model, brand, year, power, price, description, engine, images, quantity } = req.body;
 
-        if (!model || !brand || !year || !power || !price || !description || !engine || !images || !quantity) {
+        if (!model || !brand || !year || !power || !price || !description || !engine || !quantity) {
             return res.status(400).json({ error: "Preencha todos os campos" });
         }
 
@@ -135,7 +135,7 @@ router.put("/update/:id", async (req, res) => {
             return res.status(404).json({ error: "Product not found" })
         }
 
-        await Product.update(
+        await Product.update(   
             { model, brand, year, power, price, description, engine, quantity },
             { where: { id } }
         );
