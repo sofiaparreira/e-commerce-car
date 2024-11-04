@@ -21,7 +21,7 @@ export default function Register() {
         role, 
       });
 
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error('Erro durante o registro', error);
       setError(error.response?.data?.error || 'Erro ao registrar');
