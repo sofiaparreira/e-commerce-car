@@ -22,6 +22,9 @@ const ShoppingCart = () => {
         const data = await response.json()
         setUser(data)
         console.log(data)
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId'); 
+        console.log(token, userId)
       } catch (error) {
         console.error('Erro ao buscar produto', error)
       }

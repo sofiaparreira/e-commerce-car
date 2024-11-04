@@ -17,7 +17,7 @@ export default function Login() {
       });
   
       const data = response.data;
-      console.log('Response from API:', data); // Verifique a resposta completa
+      console.log('Response from API:', data);
   
       if (!data.token) {
         console.error('Token não encontrado na resposta.');
@@ -25,9 +25,11 @@ export default function Login() {
       }
   
       localStorage.setItem('token', data.token);
+      if (data.userId) {
+        localStorage.setItem('userId', data.id);
+      }
   
-      // Verifique a estrutura da resposta e ajuste conforme necessário
-      console.log('User Role:', data.role); // Agora isso deve funcionar corretamente
+      console.log('User Role:', data.role); 
   
       if (data.role === "admin") {
         console.log('Navegando para /admin');
