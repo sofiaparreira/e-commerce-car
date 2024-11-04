@@ -6,9 +6,9 @@ const Payment = () => {
   const handlePayment = () => {
 
     setIsPaid(false);
-    setTimeout(() => {
+
       setIsPaid(true);
-    }, 3000);
+
   };
 
   return (
@@ -37,14 +37,14 @@ const Payment = () => {
       )}
 
       {isPaid && (
-        <div className="mt-4 text-green-500 flex flex-col items-center justify-center pb32">
-        <p className="text-center">Pagamento efetuado com sucesso</p>
+        <div className="mt-4 text-green-500 flex gap-y-8 flex-col items-center justify-center py-64">
+        <p className="text-center text-xl">Pagamento efetuado com sucesso</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="28"
           width="28"
           viewBox="0 0 512 512"
-          className="mt-2" // Adicione uma margem superior se necessário
+          className="mt-2" 
         >
           <path
             className="fill-green-500"
