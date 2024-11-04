@@ -21,7 +21,7 @@ export default function Register() {
         role, 
       });
 
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.error('Erro durante o registro', error);
       setError(error.response?.data?.error || 'Erro ao registrar');
@@ -141,7 +141,7 @@ export default function Register() {
           <p className="mt-10 text-center text-sm/6 text-gray-700">
             Já possui uma conta?{"  "}
             <Link
-              to="/login"
+              to="/"
               className="font-semibold text-red-600 hover:text-red-500"
             >
               Login

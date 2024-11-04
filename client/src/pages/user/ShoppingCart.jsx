@@ -2,25 +2,35 @@ import React, { useEffect, useState } from "react";
 import ItemCart from "../../components/ItemCart";
 
 const ShoppingCart = () => {
-  const [itemsCart, setItemsCart] = useState([]); // Inicializando como array vazio
+  const [itemsCart, setItemsCart] = useState([]); 
+  const [user, setUser] = useState([])
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:3000/cart/:id');
-        if (!response.ok) {
-          const text = await response.text(); // Get the response as text
-          throw new Error(`HTTP error! status: ${response.status}, response: ${text}`);
-        }
-        const data = await response.json();
-        setItemsCart(data);
+        
       } catch (error) {
-        console.error('Erro ao buscar produtos', error);
+        
       }
-    };
-    
-    fetchItems();
-  }, []);
+    }
+  }, [])
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/auth/')
+        const data = await response.json()
+        setUser(data)
+        console.log(data)
+        const token = localStorage.getItem('token');
+        const userId = localStorage.getItem('userId'); 
+        console.log(token, userId)
+      } catch (error) {
+        console.error('Erro ao buscar produto', error)
+      }
+    }
+    fetchUser()
+  }, [])
 
   return (
     <div>

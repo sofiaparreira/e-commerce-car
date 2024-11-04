@@ -7,13 +7,16 @@ import AddProject from './pages/admin/AddProduct'
 import ShoppingCart from './pages/user/ShoppingCart'
 import EditProduct from './pages/admin/EditProduct'
 import Payment from './pages/user/Payment'
+import { AuthProvider } from './pages/AuthProvider'; 
+
 
 
 function App() {
   return (
+    <AuthProvider>
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/shoppingCart" element={<ShoppingCart />} />
         <Route path="/payment" element={<Payment />} />
 
@@ -25,11 +28,12 @@ function App() {
 
 
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
 
 
       </Routes>
     </Router>
+    </AuthProvider>
   )
 }
 

@@ -65,6 +65,18 @@ router.post("/login", async (req, res) => {
     }
 });
 
+router.get("/", async (req, res) => {
+    try {
+        const users = await User.findAll({
+            attributes: { exclude: ['password'] } // Exclui a senha dos resultados
+        });
+        res.status(200).json(users);
+    } catch (error) {
+        console.error('Erro ao buscar usuários: ', error.message);
+        res.status(500).json({ error: 'Erro ao buscar usuários' });
+    }
+});
+
 
 
 

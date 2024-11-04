@@ -23,12 +23,14 @@ const HomeAdmin = () => {
         const response = await fetch('http://localhost:3000/products')
         const data = await response.json()
         setProducts(data)
+  
+  
       } catch (error) {
         console.error('Erro ao buscar produto', error)
       }
     }
     fetchProducts()
-  }, [])
+  }, []);
 
 
   useEffect(() => {
@@ -57,15 +59,18 @@ const HomeAdmin = () => {
         
       </div>
 
-      <section className='px-44 py-16'>
+      <section className='xl:px-44 md:px-20 px-16 py-16'>
           <div className='flex justify-between'>
               <h1 className='text-3xl font-medium'>Carros</h1>
-              <Link to='/admin/add' className='px-6 flex items-center gap-4 text-white rounded-md bg-red-600'><svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 512 512"><path className='fill-white' d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>Adicionar produto</Link>
+              <Link to='/admin/add' className='px-6 flex items-center gap-4 text-white rounded-md bg-red-600'>
+                <svg xmlns="http://www.w3.org/2000/svg" height="18" width="18" viewBox="0 0 512 512">
+                  <path className='fill-white' d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344l0-64-64 0c-13.3 0-24-10.7-24-24s10.7-24 24-24l64 0 0-64c0-13.3 10.7-24 24-24s24 10.7 24 24l0 64 64 0c13.3 0 24 10.7 24 24s-10.7 24-24 24l-64 0 0 64c0 13.3-10.7 24-24 24s-24-10.7-24-24z"/></svg>
+                  <span className='sm:block hidden'>Adicionar produto</span></Link>
           </div>
               <p className='text-gray-600 text-sm mt-1'>Nossos melhores carros esportivos</p>
  
 
-          <div className='mt-16 grid grid-cols-3 gap-32'>
+          <div className='mt-16 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-16 gap-8'>
             {products.map(product => (
               <CardProduct key={product.id} product={product}/>
             ))}
