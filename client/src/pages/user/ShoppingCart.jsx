@@ -3,6 +3,7 @@ import ItemCart from "../../components/ItemCart";
 
 const ShoppingCart = () => {
   const [itemsCart, setItemsCart] = useState([]); 
+  const [user, setUser] = useState([])
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -14,7 +15,19 @@ const ShoppingCart = () => {
     }
   }, [])
 
-
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/auth/')
+        const data = await response.json()
+        setUser(data)
+        console.log(data)
+      } catch (error) {
+        console.error('Erro ao buscar produto', error)
+      }
+    }
+    fetchUser()
+  }, [])
 
   return (
     <div>
