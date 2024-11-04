@@ -3,17 +3,16 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CardProduct = ({ product }) => {
-  // Função para adicionar ao carrinho
   const handleAddToCart = async () => {
     try {
       const response = await axios.post("http://localhost:3000/cart/add", {
-        userId: 1, // Certifique-se de usar um userId válido
-        productId: product.id, // Certifique-se de que product.id seja válido
+        userId: 1, 
+        productId: product.id, 
         quantity: 1,
       });
       console.log("Product added successfully:", response.data.message);
     } catch (error) {
-      // Tratamento de erros
+    
       if (error.response && error.response.data) {
         console.error("Error adding product to cart:", error.response.data);
         alert(`Error: ${error.response.data.message || "Unable to add to cart"}`);
@@ -41,15 +40,15 @@ const CardProduct = ({ product }) => {
 
   return (
     <div
-      className="bg-white text-white rounded-xl pb-8"
+      className="border boder-gray-200   text-white rounded-xl pb-4"
       onClick={handleContextMenu}
     >
       <img
-        className="rounded-2xl object-cover object-center"
+        className="rounded-2xl object-cover object-center w-96"
         src={firstImage}
         alt={product.model}
       />
-      <div className="p-8">
+      <div className="px-4 py-8">
         <h2 className="text-2xl text-zinc-800 font-medium first-letter:uppercase">
           {product.model}
         </h2>
@@ -69,15 +68,17 @@ const CardProduct = ({ product }) => {
         </p>
       </div>
 
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          handleAddToCart();
-        }}
-        className="bg-red-600 mx-8 rounded-xl px-24 py-3 z-10"
-      >
-        Adicionar ao carrinho
-      </button>
+      <div className="px-4">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleAddToCart();
+          }}
+          className="bg-red-600 rounded-lg w-full py-2 z-10"
+        >
+          Adicionar ao carrinho
+        </button>
+      </div>
     </div>
   );
 };
