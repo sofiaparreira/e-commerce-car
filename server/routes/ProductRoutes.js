@@ -155,5 +155,58 @@ router.put("/update/:id", async (req, res) => {
     }
 })
 
+// Rota para atualizar imagens de um produto
+router.put("/:id/images", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { imagesToAdd, imagesToDelete } = req.body;
+
+        const product = await Product.findByPk(id);
+        if (!product) {
+            return res.status(404).json({ error: "Produto não encontrado" });
+        }
+
+        // Deletar imagens
+        if (Array.isArray(imagesToDelete)) {
+            await ProductImage.destroy({ where: { id: imagesToDelete } });
+        }
+
+        // Adicionar novas imagens
+        if (Array.isArray(imagesToAdd)) {
+            await Promise.all(imagesToAdd.map(async (imageUrl) => {
+                await ProductImage.create({ url: imageUrl, productId: id });
+            }));
+        }
+
+        res.status(200).json({ message: "Imagens atualizadas com sucesso" });
+    } catch (error) {
+        console.error("Error updating product images", error);
+        return res.status(500).json({ error: "Erro ao atualizar imagens do produto" });
+    }
+});
+
+// Rota para deletar uma imagem específica
+router.delete("/:id/images/:imageId", async (req, res) => {
+    try {
+        const { id, imageId } = req.params;
+
+        const product = await Product.findByPk(id);
+        if (!product) {
+            return res.status(404).json({ error: "Produto não encontrado" });
+        }
+
+        const image = await ProductImage.findByPk(imageId);
+        if (!image || image.productId !== id) {
+            return res.status(404).json({ error: "Imagem não encontrada" });
+        }
+
+        await ProductImage.destroy({ where: { id: imageId } });
+        res.status(200).json({ message: "Imagem deletada com sucesso" });
+    } catch (error) {
+        console.error("Error deleting product image", error);
+        return res.status(500).json({ error: "Erro ao deletar imagem do produto" });
+    }
+});
+
 
 module.exports = router;
