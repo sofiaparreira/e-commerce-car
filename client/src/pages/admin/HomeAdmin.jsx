@@ -23,12 +23,18 @@ const HomeAdmin = () => {
         const response = await fetch('http://localhost:3000/products')
         const data = await response.json()
         setProducts(data)
+  
+       
+        if (data.length > 0 && data[0].ProductImages.length > 0) {
+          console.log(data[0].ProductImages[0].url);
+        }
+  
       } catch (error) {
         console.error('Erro ao buscar produto', error)
       }
     }
     fetchProducts()
-  }, [])
+  }, []);
 
 
   useEffect(() => {
