@@ -5,14 +5,14 @@ import DropdownWithSearch from "../../components/Menususp";
 import InputDefault from "../../components/InputDefault";
 import Label from "../../components/Label";
 
-
 const EditProduct = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [images, setImages] = useState([]);
+    const [images, setImages] = useState([]); // Para imagens novas
     const [imagePreviews, setImagePreviews] = useState([]);
+    const [imagesToDelete, setImagesToDelete] = useState([]); // IDs das imagens a serem deletadas
     const [model, setModel] = useState('');
     const [brand, setBrand] = useState('');
     const [year, setYear] = useState(new Date().getFullYear());
@@ -21,7 +21,7 @@ const EditProduct = () => {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
-    
+
     const years = Array.from({ length: 30 }, (_, i) => new Date().getFullYear() - i); // Lista de anos
 
     useEffect(() => {
@@ -37,7 +37,10 @@ const EditProduct = () => {
             setDescription(data.description);
             setPrice(data.price);
             setQuantity(data.quantity);
-            // Adicione aqui a lógica para as imagens, se necessário
+            // Adicionando imagens do produto
+            const imagePreviews = data.ProductImages.map(image => image.url);
+            setImagePreviews(imagePreviews);
+            setImagesToDelete(data.ProductImages.map(image => image.id)); // Supondo que cada imagem tenha um ID
             setLoading(false);
         };
 
@@ -55,7 +58,8 @@ const EditProduct = () => {
             description,
             price,
             quantity,
-            images, // Adicione suas imagens aqui se necessário
+            images: imagePreviews, // Para o servidor saber que estamos atualizando as imagens
+            imagesToDelete // IDs das imagens a serem deletadas
         };
 
         const response = await fetch(`http://localhost:3000/products/update/${id}`, {
@@ -75,14 +79,20 @@ const EditProduct = () => {
 
     const handleImageChange = (files) => {
         const fileArray = Array.from(files).map(file => URL.createObjectURL(file));
-        setImagePreviews(fileArray);
-        setImages(files); // Armazene os arquivos se precisar enviar para o servidor
+        setImagePreviews(prev => [...prev, ...fileArray]);
+        setImages(prev => [...prev, ...files]); // Armazene os arquivos se precisar enviar para o servidor
     };
 
     const removeImage = (index) => {
         const newImages = [...imagePreviews];
+        const imageToRemove = newImages[index];
         newImages.splice(index, 1);
         setImagePreviews(newImages);
+        
+        // Se a imagem já estava no servidor, adicione o ID à lista de imagens a serem deletadas
+        if (product.ProductImages[index]?.id) {
+            setImagesToDelete(prev => [...prev, product.ProductImages[index].id]);
+        }
     };
 
     if (loading) return <div>Loading...</div>;
