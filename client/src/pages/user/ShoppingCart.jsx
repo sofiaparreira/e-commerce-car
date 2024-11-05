@@ -96,7 +96,7 @@ const ShoppingCart = () => {
           <h2 className="title font-bold text-3xl leading-10 mb-8 text-zinc-900 max-lg:text-center">
             Meu Carrinho
           </h2>
-          <div className="mt-16 grid grid-cols-3 gap-32">
+          <div className="mt-16 gap-32">
             {itemsCart.length > 0 ? (
               itemsCart.map((product) => (
                 <ItemCart

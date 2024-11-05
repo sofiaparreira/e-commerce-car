@@ -7,25 +7,23 @@ const ItemCart = ({ product, onUpdate, onDelete }) => {
     ? product.ProductImages[0].url
     : "https://pagedone.io/asset/uploads/1701162826.png";
 
-  // Função para lidar com a alteração da quantidade
   const handleQuantityChange = (e) => {
     const newQuantity = parseInt(e.target.value, 10);
     setQuantity(newQuantity);
-    onUpdate(product.id, newQuantity); // Chama a função de atualização do carrinho
+    onUpdate(product.id, newQuantity); 
   };
 
-  // Função para remover o item do carrinho
   const handleRemoveItem = () => {
-    onDelete(product.id); // Chama a função para deletar o item
+    onDelete(product.id); 
   };
 
   return (
-    <div className="rounded-lg border-2 border-gray-200 p-4 lg:p-8 grid grid-cols-12 mb-8 max-lg:max-w-lg max-lg:mx-auto gap-y-4">
+    <div className="rounded-lg border-2 border-gray-200 p-4 lg:pt-8 lg:px-8 grid grid-cols-12 mb-8 max-lg:max-w-lg max-lg:mx-auto  gap-y-4 gap-x-4">
       <div className="col-span-12 lg:col-span-2 img box">
         <img
           src={imageUrl} 
           alt={product.model}
-          className="max-lg:w-full lg:w-[180px] rounded-lg object-cover"
+          className="w-full h-full rounded-lg object-cover"
         />
       </div>
       <div className="col-span-12 lg:col-span-10 detail w-full lg:pl-3">
@@ -36,16 +34,15 @@ const ItemCart = ({ product, onUpdate, onDelete }) => {
         </div>
         <span className="px-4 py-1 text-base rounded-md bg-red-100 text-red-700">{product.brand}</span>
         <div className="flex justify-between items-center">
-          <div className="flex items-center gap-4">
-            {/* Input para alterar a quantidade */}
+          <div className="flex items-center gap-4 mt-8">
             <input
               type="number"
               className="border border-gray-200 rounded-full w-10 aspect-square outline-none text-gray-900 font-semibold text-sm py-1.5 px-3 bg-gray-100 text-center"
               value={quantity}
               onChange={handleQuantityChange}
-              min="1" // Não permite quantidade negativa
+              min="1" 
             />
-            {/* Botão para remover o item */}
+
             <button
               onClick={handleRemoveItem}
               className="text-red-600 font-semibold hover:text-red-800"
@@ -54,7 +51,7 @@ const ItemCart = ({ product, onUpdate, onDelete }) => {
             </button>
           </div>
           <h6 className="text-red-600 font-bold text-xl leading-9 text-right">
-            R$ {product.price * quantity} {/* Exibe o total por item */}
+            R$ {product.price * quantity}
           </h6>
         </div>
       </div>
