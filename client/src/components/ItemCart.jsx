@@ -1,9 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 
-const ItemCart = ({ product }) => {
+const ItemCart = ({ product, onUpdate, onDelete }) => {
+  const [quantity, setQuantity] = useState(product.quantity || 1);
+
   const imageUrl = product.ProductImages && product.ProductImages.length > 0
     ? product.ProductImages[0].url
     : "https://pagedone.io/asset/uploads/1701162826.png";
+
+  // Função para lidar com a alteração da quantidade
+  const handleQuantityChange = (e) => {
+    const newQuantity = parseInt(e.target.value, 10);
+    setQuantity(newQuantity);
+    onUpdate(product.id, newQuantity); // Chama a função de atualização do carrinho
+  };
+
+  // Função para remover o item do carrinho
+  const handleRemoveItem = () => {
+    onDelete(product.id); // Chama a função para deletar o item
+  };
+
   return (
     <div className="rounded-lg border-2 border-gray-200 p-4 lg:p-8 grid grid-cols-12 mb-8 max-lg:max-w-lg max-lg:mx-auto gap-y-4">
       <div className="col-span-12 lg:col-span-2 img box">
@@ -22,15 +37,24 @@ const ItemCart = ({ product }) => {
         <span className="px-4 py-1 text-base rounded-md bg-red-100 text-red-700">{product.brand}</span>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
+            {/* Input para alterar a quantidade */}
             <input
               type="number"
               className="border border-gray-200 rounded-full w-10 aspect-square outline-none text-gray-900 font-semibold text-sm py-1.5 px-3 bg-gray-100 text-center"
-              value={product.quantity || 1}
-              onChange={() => {}}
+              value={quantity}
+              onChange={handleQuantityChange}
+              min="1" // Não permite quantidade negativa
             />
+            {/* Botão para remover o item */}
+            <button
+              onClick={handleRemoveItem}
+              className="text-red-600 font-semibold hover:text-red-800"
+            >
+              Remover
+            </button>
           </div>
           <h6 className="text-red-600 font-bold text-xl leading-9 text-right">
-            R$ {product.price}
+            R$ {product.price * quantity} {/* Exibe o total por item */}
           </h6>
         </div>
       </div>

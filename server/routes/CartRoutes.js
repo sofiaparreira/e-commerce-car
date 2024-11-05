@@ -66,58 +66,62 @@ router.post('/add', async (req, res) => {
 });
 
 router.delete('/:userId/:productId/delete', async (req, res) => {
-    const { userId, productId} = req.params
-
-    try {
-        const user = await User.findByPk(userId);
-        if(!user) {
-            return res.status(404).json({ error: 'User not found'})
-        }
-
-        const product = await ItemCart.findOne({ where: {userId, productId}})
-        if(!product) {
-            return res.status(404).json({error: "Item not found in cart"})
-        }
-        await product.destroy()
-        res.status(200).json({message: "Item deleted successfully"})
-
-    } catch (error) {
-        console.error("Error deleting product from cart:", error);
-        res.status(500).json({message: "Error removing item from cart"})
-        
-    }
-})
-
-router.put('/:userId/:productId/update', async (req, res) => {
     const { userId, productId } = req.params;
-    const { quantity } = req.body; 
 
     try {
         const user = await User.findByPk(userId);
         if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+            return res.status(404).json({ error: 'Usuário não encontrado' });
+        }
+
+        const product = await ItemCart.findOne({ where: { userId, productId } });
+        if (!product) {
+            return res.status(404).json({ error: 'Item não encontrado no carrinho' });
+        }
+
+        await product.destroy();
+        // Retorna o carrinho atualizado
+        const updatedCart = await ItemCart.findAll({ where: { userId } });
+        res.status(200).json({ message: 'Item deletado com sucesso', cart: updatedCart });
+
+    } catch (error) {
+        console.error("Erro ao deletar produto do carrinho:", error);
+        res.status(500).json({ message: 'Erro ao remover item do carrinho' });
+    }
+});
+
+router.put('/:userId/:productId/update', async (req, res) => {
+    const { userId, productId } = req.params;
+    const { quantity } = req.body;
+
+    try {
+        const user = await User.findByPk(userId);
+        if (!user) {
+            return res.status(404).json({ error: 'Usuário não encontrado' });
         }
 
         const item = await ItemCart.findOne({ where: { userId, productId } });
         if (!item) {
-            return res.status(404).json({ error: 'Item not found in cart' });
+            return res.status(404).json({ error: 'Item não encontrado no carrinho' });
         }
 
-        
-        item.quantity = quantity;
-        const product = await Product.findByPk(productId); 
+        const product = await Product.findByPk(productId);
         if (!product) {
-            return res.status(404).json({ error: 'Product not found' });
+            return res.status(404).json({ error: 'Produto não encontrado' });
         }
-        
-        item.priceAll = quantity * product.price; 
-        await item.save(); 
 
-        res.status(200).json({ message: "Item updated successfully" });
+        item.quantity = quantity;
+        item.priceAll = quantity * product.price;  // Recalcular o preço total
+        await item.save();
+
+        // Retorna o carrinho atualizado
+        const updatedCart = await ItemCart.findAll({ where: { userId } });
+
+        res.status(200).json({ message: 'Item atualizado com sucesso', cart: updatedCart });
 
     } catch (error) {
-        console.error("Error updating item in cart: ", error);
-        res.status(500).json({ message: 'Error updating item in cart' });
+        console.error("Erro ao atualizar item no carrinho:", error);
+        res.status(500).json({ message: 'Erro ao atualizar item no carrinho' });
     }
 });
 
