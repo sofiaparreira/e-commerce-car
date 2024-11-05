@@ -3,14 +3,20 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CardProduct = ({ product }) => {
+
+  const userID = localStorage.getItem("userId");
+  console.log("O ID DO USUARIO É:", userID);
+
+
+
   const handleAddToCart = async () => {
     try {
       const response = await axios.post("http://localhost:3000/cart/add", {
-        userId: 1, 
+        userId: userID, 
         productId: product.id, 
         quantity: 1,
       });
-      console.log("Product added successfully:", response.data.message);
+      console.log(`Product added successfully no id ${userID}`);
     } catch (error) {
     
       if (error.response && error.response.data) {
