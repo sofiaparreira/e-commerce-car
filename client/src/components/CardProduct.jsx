@@ -3,28 +3,18 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const CardProduct = ({ product }) => {
-<<<<<<< HEAD
+
 
   const userID = localStorage.getItem("userId");
   console.log("O ID DO USUARIO É:", userID);
 
 
-
+  const navigate = useNavigate();
   const handleAddToCart = async () => {
     try {
       const response = await axios.post("http://localhost:3000/cart/add", {
         userId: userID, 
         productId: product.id, 
-=======
-  const navigate = useNavigate();
-
-  // Add to cart handler
-  const handleAddToCart = async () => {
-    try {
-      const response = await axios.post("http://localhost:3000/cart/add", {
-        userId: 1,
-        productId: product.id,
->>>>>>> c075e66031da3821ed7b2bf9dc88f3db21a47fa2
         quantity: 1,
       });
       console.log(`Product added successfully no id ${userID}`);
