@@ -38,6 +38,7 @@ const CardProduct = ({ product }) => {
       ? product.ProductImages[product.ProductImages.length - 1].url
       : product.image;
 
+
   return (
     <div
       className="border boder-gray-200   text-white rounded-xl pb-4"

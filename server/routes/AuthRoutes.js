@@ -57,7 +57,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign({ id: userRegistered.id, role: userRegistered.role }, 'secret', { expiresIn: '3h' });
 
         // Retorne o token e o role
-        res.status(200).json({ token, role: userRegistered.role }); // Inclua o role na resposta
+        res.status(200).json({ token, role: userRegistered.role, ID: userRegistered.id }); 
 
     } catch (error) {
         console.error('Erro ao logar', error.message);

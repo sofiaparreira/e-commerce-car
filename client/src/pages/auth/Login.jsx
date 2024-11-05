@@ -18,6 +18,8 @@ export default function Login() {
   
       const data = response.data;
       console.log('Response from API:', data);
+      localStorage.setItem("userId", data.ID);
+      console.log(localStorage.getItem("userId"))
   
       if (!data.token) {
         console.error('Token não encontrado na resposta.');
