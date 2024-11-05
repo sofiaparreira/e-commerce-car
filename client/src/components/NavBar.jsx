@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useAuth } from '../pages/AuthProvider'; // ajuste o caminho conforme necessário
+import { useAuth } from '../pages/AuthProvider'; 
 
 const NavBar = () => {
   const { isLoggedIn, logout } = useAuth();

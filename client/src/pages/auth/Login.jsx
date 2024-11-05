@@ -38,7 +38,7 @@ export default function Login() {
         navigate('/admin');
       } else {
         console.log('Navegando para /');
-        navigate('/');
+        navigate('/home');
       }
   
     } catch (error) {
