@@ -2,29 +2,49 @@ import React, { useEffect, useState } from "react";
 import ItemCart from "../../components/ItemCart";
 
 const ShoppingCart = () => {
-  const [itemsCart, setItemsCart] = useState([]);
-  const [products, setProducts] = useState([]);
-  const [user, setUser] = useState([]);
+  const [itemsCart, setItemsCart] = useState([]); // Armazena os itens completos do carrinho
+  const [products, setProducts] = useState([]); // Lista de produtos disponíveis
+  const [user, setUser] = useState([]); // Dados do usuário (se necessário)
 
   const userID = localStorage.getItem("userId");
   console.log("O ID DO USUARIO É:", userID);
 
+  // Fetch para buscar os produtos do carrinho
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await fetch(`http://localhost:3000/cart/${userID}`);
-
         if (!response.ok) {
-          console.log("Erro ao mostrar itens no carrinho");
+          console.log("Erro ao buscar itens no carrinho");
+          return;
         }
         const data = await response.json();
-        
-        // Aqui filtramos e pegamos apenas os productId
+
+        // Aqui, pegamos apenas os IDs dos produtos do carrinho
         const productIds = data.map((item) => item.productId);
-        console.log("Product IDs no carrinho: ", productIds);  // Verifique no console se está retornando os IDs corretamente
-        setItemsCart(productIds);  // Armazenamos apenas os IDs dos produtos no estado
+        console.log("Product IDs no carrinho: ", productIds);
+
+        // Agora, vamos buscar os produtos correspondentes a esses IDs
+        const fetchedProducts = await fetchProducts(productIds);
+        setItemsCart(fetchedProducts); // Armazenamos os produtos completos no estado
       } catch (error) {
-        console.error(error);
+        console.error("Erro ao buscar dados do carrinho:", error);
+      }
+    };
+
+    const fetchProducts = async (productIds) => {
+      try {
+        const response = await fetch("http://localhost:3000/products");
+        const allProducts = await response.json();
+
+        console.log(allProducts)
+        const selectedProducts = allProducts.filter((product) =>
+          productIds.includes(product.id)
+        );
+
+        return selectedProducts;
+      } catch (error) {
+        console.error("Erro ao buscar os produtos", error);
       }
     };
 
@@ -32,19 +52,6 @@ const ShoppingCart = () => {
       fetchItems();
     }
   }, [userID]);
-
-  const fetchAllProducts = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/products/`);
-      if (!response.ok) {
-        console.log("Erro ao mostrar itens no carrinho");
-      }
-      const data = await response.json();
-      setProducts(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   return (
     <div>
@@ -54,16 +61,10 @@ const ShoppingCart = () => {
             Meu Carrinho
           </h2>
           <div className="mt-16 grid grid-cols-3 gap-32">
-            {/* Removido a renderização de products, pois não está definido */}
-          </div>
-
-          <div>
-            {/* Exibe apenas os ids dos produtos que estão no carrinho */}
+            {/* Renderizar os itens do carrinho usando o componente ItemCart */}
             {itemsCart.length > 0 ? (
-              itemsCart.map((productId) => (
-                <div key={productId}>
-                  <p>Produto ID: {productId}</p>
-                </div>
+              itemsCart.map((product) => (
+                <ItemCart key={product.id} product={product} />
               ))
             ) : (
               <p>Seu carrinho está vazio.</p>
@@ -76,7 +77,7 @@ const ShoppingCart = () => {
             </h5>
             <h6 className="font-bold text-3xl lead-10 text-red-600">
               R${" "}
-              {itemsCart.reduce((total, item) => total + item.priceAll, 0).toFixed(2)}
+              {itemsCart.reduce((total, item) => total + item.price, 0).toFixed(2)}
             </h6>
           </div>
           <div className="max-lg:max-w-lg max-lg:mx-auto">
