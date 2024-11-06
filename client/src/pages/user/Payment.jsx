@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 const Payment = () => {
   const [isPaid, setIsPaid] = useState(false);
+  const [fullName, setFullName] = useState('')
 
   const handlePayment = () => {
 
@@ -19,7 +20,7 @@ const Payment = () => {
         <h1 className="text-2xl mb-16">Dados para Entrega</h1>
 
         <div className="flex flex-col gap-y-8">
-          <input className="border border-gray-300 rounded-md px-2 py-2 outline-none" required placeholder="Nome Completo" type="text" />
+          <input onChange={(e) => setFullName(e.target.value)} className="border border-gray-300 rounded-md px-2 py-2 outline-none" required placeholder="Nome Completo" type="text" />
           <input className="border border-gray-300 rounded-md px-2 py-2 outline-none" required placeholder="Endereço" type="text" />
           <div className="flex gap-16">
             <input className="border border-gray-300 rounded-md px-2 py-2 outline-none w-full" required placeholder="Número" type="text" />
@@ -39,10 +40,11 @@ const Payment = () => {
 
       {isPaid && (
         <div className="py-8">
-                <Link className="mb-8 mt-8 underline mx-8" to='/home'>Página inicial </Link>
+          <Link className="mb-8 mt-8 underline mx-8" to='/home'>Página inicial </Link>
 
         <div className="mt-4 flex flex-col items-center justify-center py-64">
-        <p className="text-center text-xl text-green-500 ">Pagamento efetuado com sucesso</p>
+        <p className="text-center text-gray-600 flex gap-2  ">Obrigado, <p className="first-letter:uppercase">{fullName}</p></p>
+        <p className="mt-4 text-green-500 text-xl mb-4">Pagamento efetuado com sucesso</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="28"
