@@ -33,10 +33,12 @@ const ShoppingCart = () => {
         );
 
         return selectedProducts;
+        
       } catch (error) {
         console.error("Erro ao buscar os produtos", error);
       }
     };
+    
 
     if (userID) {
       fetchItems();
@@ -88,6 +90,7 @@ const ShoppingCart = () => {
       return total + itemTotal;
     }, 0);
   };
+
 
   return (
     <div>
