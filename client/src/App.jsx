@@ -8,6 +8,7 @@ import ShoppingCart from './pages/user/ShoppingCart'
 import EditProduct from './pages/admin/EditProduct'
 import Payment from './pages/user/Payment'
 import { AuthProvider } from './pages/AuthProvider'; 
+import Detail from './pages/user/Detail'
 
 
 
@@ -19,6 +20,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/shoppingCart" element={<ShoppingCart />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/detail/:id" element={<Detail />} />
 
 
 

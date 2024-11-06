@@ -85,7 +85,7 @@ const ShoppingCart = () => {
 
 
   const goToPayment = () => {
-    navigate('/home')
+    navigate('/payment')
   }
 
   
