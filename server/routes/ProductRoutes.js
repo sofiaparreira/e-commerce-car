@@ -19,7 +19,7 @@ router.get("/", async (req, res) => {
 
 router.get("/:id", async (req, res) => {
     try {
-        const productId = req.params.id;
+        const productId = req.params.id;    
 
         const productWithImages = await Product.findOne({
             where: { id: productId },
@@ -36,6 +36,7 @@ router.get("/:id", async (req, res) => {
         res.status(500).json({ error: "Erro ao buscar produto" });
     }
 });
+
 
 router.get("/:id/images", async (req, res) => {
     try {
@@ -57,6 +58,21 @@ router.get("/:id/images", async (req, res) => {
         res.status(500).json({ error: "Erro ao buscar imagens do produto" });
     }
 });
+
+router.get("/detail/:id", async (req, res) => {
+    try {
+        const produtcId = req.params.id
+        const product = await Product.findByPk(produtcId)
+
+        if(!product) {
+            return res.status(404).json({message: "Produto não encontrado"})
+        }
+        res.json(product)
+    } catch (error) {
+        console.log("Erro ao buscar produto", error)
+    }
+})
+
 
 router.post("/add", async (req, res) => {
     try {

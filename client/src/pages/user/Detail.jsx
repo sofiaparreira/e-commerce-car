@@ -1,7 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import NavBar from "../../components/NavBar";
+import { useParams } from "react-router-dom";
 
 const Detail = () => {
+  const { id } = useParams();
+
+  const handleGetDetail = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/products/detail/${id}`
+      );
+      const data = await response.json();
+      console.log("Detalhes do produot", data);
+    } catch (error) {
+      console.log("Erro ao buscar detalhes do produto: ", error);
+    }
+  };
+
+  useEffect(() => {
+    handleGetDetail();
+  }, [id]);
+
   return (
     <div>
       <NavBar />
