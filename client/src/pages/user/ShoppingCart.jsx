@@ -72,8 +72,8 @@ const ShoppingCart = () => {
         console.log("Erro ao deletar item do carrinho");
         return;
       }
-      const data = await response.json();
-      setItemsCart(data.cart);
+
+      setItemsCart((prevItems) => prevItems.filter((item) => item.id !== productId));
     } catch (error) {
       console.error("Erro ao remover item do carrinho:", error);
     }
