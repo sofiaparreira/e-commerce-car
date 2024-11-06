@@ -46,4 +46,4 @@ Order.belongsTo(Product, {foreignKey: 'productId'})
 User.hasMany(Order, { foreignKey: 'userId'})
 Product.hasMany(Order, { foreignKey: 'productId'})
 
-module.exports = ItemCart;
+module.exports = Order;
