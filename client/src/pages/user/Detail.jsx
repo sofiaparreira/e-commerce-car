@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "../../components/NavBar";
 import { useParams } from "react-router-dom";
 
 const Detail = () => {
   const { id } = useParams();
+  const [product, setProduct] = useState()
+
 
   const handleGetDetail = async () => {
     try {
@@ -11,6 +13,7 @@ const Detail = () => {
         `http://localhost:3000/products/detail/${id}`
       );
       const data = await response.json();
+      setProduct(data)
       console.log("Detalhes do produot", data);
     } catch (error) {
       console.log("Erro ao buscar detalhes do produto: ", error);
@@ -20,6 +23,10 @@ const Detail = () => {
   useEffect(() => {
     handleGetDetail();
   }, [id]);
+
+  
+
+  if(!product) return <p>Carregando...</p>
 
   return (
     <div>
@@ -37,99 +44,34 @@ const Detail = () => {
               </div>
             </div>
             <div class="data w-full lg:pr-8 pr-0 xl:justify-start justify-center flex items-center max-lg:pb-10 xl:my-2 lg:my-5 my-0">
-              <div class="data w-full max-w-xl">
-                <h2 class="font-manrope font-bold text-3xl leading-10 text-gray-900 mb-2 capitalize">
-                  Basic Yellow Tropical Printed Shirt
-                </h2>
+              <div class="data w-full max-w-2xl">
+                <div className="flex justify-between mb-8">
+                <span>
+                    <h2 class="font-bold text-3xl text-gray-900 mb-4">
+                      {product.model}
+                    </h2>
+                    <span className="border-b border-red-500 py-1 px-4 ">{product.brand}</span>
+                </span>
 
-                <h6 class="font-manrope font-semibold text-2xl leading-9 mb-12 text-gray-900 pr-5 mr-5">
-                  $220
+                <h6 class="font-semibold text-2xl leading-9 mb-12 text-gray-900 pr-5 mr-5">
+                  R$220
                 </h6>
+                </div>
+               
+               <ul className="text-gray-500 list-disc px-4">
+                <li>Potência: {product.power}</li>
+                <li>Motor: {product.engine} </li>
 
-                <p>Model</p>
-                <p>asdf</p>
+               </ul>
 
-                <p class="text-gray-500 text-base font-normal mt-16 mb-8">
-                  Introducing our vibrant Basic Yellow Tropical Printed Shirt -
-                  a celebration of style and sunshine! Embrace the essence of
-                  summer wherever you go with this eye-catching piece that
-                  effortlessly blends comfort and tropical flair.{" "}
-                  <a href="#" class="text-red-600">
-                    More....
-                  </a>
+                <p class="text-gray-500 text-base font-normal mt-12 border border-gray-200 rounded p-4 mb-8">
+                 Descrição: {product.description}
+                  
                 </p>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 py-8">
-                  <div class="flex sm:items-center sm:justify-center w-full">
-                    <button class="group py-4 px-6 border border-gray-400 rounded-l-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">
-                      <svg
-                        class="stroke-gray-900 group-hover:stroke-black"
-                        width="22"
-                        height="22"
-                        viewBox="0 0 22 22"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M16.5 11H5.5"
-                          stroke=""
-                          stroke-width="1.6"
-                          stroke-linecap="round"
-                        />
-                        <path
-                          d="M16.5 11H5.5"
-                          stroke=""
-                          stroke-opacity="0.2"
-                          stroke-width="1.6"
-                          stroke-linecap="round"
-                        />
-                        <path
-                          d="M16.5 11H5.5"
-                          stroke=""
-                          stroke-opacity="0.2"
-                          stroke-width="1.6"
-                          stroke-linecap="round"
-                        />
-                      </svg>
-                    </button>
-                    <input
-                      type="text"
-                      class="font-semibold text-gray-900 cursor-pointer text-lg py-[13px] px-6 w-full sm:max-w-[118px] outline-0 border-y border-gray-400 bg-transparent placeholder:text-gray-900 text-center hover:bg-gray-50"
-                      placeholder="1"
-                    />
-                    <button class="group py-4 px-6 border border-gray-400 rounded-r-full bg-white transition-all duration-300 hover:bg-gray-50 hover:shadow-sm hover:shadow-gray-300">
-                      <svg
-                        class="stroke-gray-900 group-hover:stroke-black"
-                        width="22"
-                        height="22"
-                        viewBox="0 0 22 22"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M11 5.5V16.5M16.5 11H5.5"
-                          stroke="#9CA3AF"
-                          stroke-width="1.6"
-                          stroke-linecap="round"
-                        />
-                        <path
-                          d="M11 5.5V16.5M16.5 11H5.5"
-                          stroke="black"
-                          stroke-opacity="0.2"
-                          stroke-width="1.6"
-                          stroke-linecap="round"
-                        />
-                        <path
-                          d="M11 5.5V16.5M16.5 11H5.5"
-                          stroke="black"
-                          stroke-opacity="0.2"
-                          stroke-width="1.6"
-                          stroke-linecap="round"
-                        />
-                      </svg>
-                    </button>
-                  </div>
-                  <button class="group py-4 px-5 rounded-full bg-red-50 text-red-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-red-100">
+        
+                 
+                  <button class="group  mt-32 py-4 px-5 rounded-full bg-red-50 text-red-600 font-semibold text-lg w-full flex items-center justify-center gap-2 transition-all duration-500 hover:bg-red-100">
                     <svg
                       class="stroke-red-600 "
                       width="22"
@@ -148,30 +90,7 @@ const Detail = () => {
                     Add to cart
                   </button>
                 </div>
-                <div class="flex items-center gap-3">
-                  <button class="group transition-all duration-500 p-4 rounded-full bg-red-50 hover:bg-red-100 hover:shadow-sm hover:shadow-red-300">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="26"
-                      height="26"
-                      viewBox="0 0 26 26"
-                      fill="none"
-                    >
-                      <path
-                        d="M4.47084 14.3196L13.0281 22.7501L21.9599 13.9506M13.0034 5.07888C15.4786 2.64037 19.5008 2.64037 21.976 5.07888C24.4511 7.5254 24.4511 11.4799 21.9841 13.9265M12.9956 5.07888C10.5204 2.64037 6.49824 2.64037 4.02307 5.07888C1.54789 7.51738 1.54789 11.4799 4.02307 13.9184M4.02307 13.9184L4.04407 13.939M4.02307 13.9184L4.46274 14.3115"
-                        stroke="#4F46E5"
-                        stroke-width="1.6"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                  </button>
-                  <button class="text-center w-full px-5 py-4 rounded-[100px] bg-red-600 flex items-center justify-center font-semibold text-lg text-white shadow-sm transition-all duration-500 hover:bg-red-700 hover:shadow-red-400">
-                    Buy Now
-                  </button>
-                </div>
-              </div>
+               
             </div>
           </div>
         </div>
