@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from 'react-router-dom'
 
 const Payment = () => {
   const [isPaid, setIsPaid] = useState(false);
@@ -37,8 +38,11 @@ const Payment = () => {
       )}
 
       {isPaid && (
-        <div className="mt-4 text-green-500 flex gap-y-8 flex-col items-center justify-center py-64">
-        <p className="text-center text-xl">Pagamento efetuado com sucesso</p>
+        <div className="py-8">
+                <Link className="mb-8 mt-8 underline mx-8" to='/home'>Página inicial </Link>
+
+        <div className="mt-4 flex flex-col items-center justify-center py-64">
+        <p className="text-center text-xl text-green-500 ">Pagamento efetuado com sucesso</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="28"
@@ -51,6 +55,7 @@ const Payment = () => {
             d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"
           />
         </svg>
+      </div>
       </div>
       )}
 

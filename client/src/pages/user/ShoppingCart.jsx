@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ItemCart from "../../components/ItemCart";
+import { Link, useNavigate } from 'react-router-dom'
 
 const ShoppingCart = () => {
   const [itemsCart, setItemsCart] = useState([]);
   const userID = localStorage.getItem("userId");
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -81,6 +83,12 @@ const ShoppingCart = () => {
     return itemsCart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
+
+  const goToPayment = () => {
+    navigate('/home')
+  }
+
+  
   return (
     <div>
       <section className="py-24 relative">
@@ -111,9 +119,9 @@ const ShoppingCart = () => {
             </h6>
           </div>
           <div className="max-lg:max-w-lg max-lg:mx-auto">
-            <button className="rounded-full mt-8 py-4 px-6 bg-red-600 text-white font-semibold text-lg w-full text-center transition-all duration-500 hover:bg-red-700">
-              Confirmar Compra
-            </button>
+              <button onClick={goToPayment} className="w-full rounded-full mt-8 py-4  bg-red-600 text-white font-semibold text-lg text-center transition-all duration-500 hover:bg-red-700"  >
+                Confirmar Compra
+              </button>
           </div>
         </div>
       </section>
