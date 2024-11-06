@@ -3,21 +3,24 @@ import ItemCart from "../../components/ItemCart";
 
 const ShoppingCart = () => {
   const [itemsCart, setItemsCart] = useState([]);
-  const [userID, setUserID] = useState(localStorage.getItem("userId"));
+  const userID = localStorage.getItem("userId");
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
         const response = await fetch(`http://localhost:3000/cart/${userID}`);
-        if (!response.ok) {
-          console.log("Erro ao buscar itens no carrinho");
-          return;
-        }
+        if (!response.ok) throw new Error("Erro ao buscar itens no carrinho");
+        
         const data = await response.json();
         const productIds = data.map((item) => item.productId);
-
-        const fetchedProducts = await fetchProducts(productIds);
-        setItemsCart(fetchedProducts);
+        const products = await fetchProducts(productIds);
+        
+        const items = data.map((item) => {
+          const product = products.find((p) => p.id === item.productId);
+          return product ? { ...product, quantity: item.quantity } : null;
+        }).filter(Boolean);
+        
+        setItemsCart(items);
       } catch (error) {
         console.error("Erro ao buscar dados do carrinho:", error);
       }
@@ -27,41 +30,35 @@ const ShoppingCart = () => {
       try {
         const response = await fetch("http://localhost:3000/products");
         const allProducts = await response.json();
-
-        const selectedProducts = allProducts.filter((product) =>
-          productIds.includes(product.id)
-        );
-
-        return selectedProducts;
-        
+        return allProducts.filter((product) => productIds.includes(product.id));
       } catch (error) {
-        console.error("Erro ao buscar os produtos", error);
+        console.error("Erro ao buscar os produtos:", error);
+        return [];
       }
     };
-    
 
-    if (userID) {
-      fetchItems();
-    }
+    if (userID) fetchItems();
   }, [userID]);
 
-  const handleUpdateItem = async (productId, quantity) => {
+  const handleUpdateItem = (productId, newQuantity) => {
+    setItemsCart((prevItems) =>
+      prevItems.map((item) =>
+        item.id === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+    updateItemQuantityOnServer(productId, newQuantity);
+  };
+
+  const updateItemQuantityOnServer = async (productId, quantity) => {
     try {
       const response = await fetch(`http://localhost:3000/cart/${userID}/${productId}/update`, {
         method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ quantity }),
       });
-      if (!response.ok) {
-        console.log("Erro ao atualizar item no carrinho");
-        return;
-      }
-      const data = await response.json();
-      setItemsCart(data.cart);
+      if (!response.ok) console.log("Erro ao atualizar item no carrinho");
     } catch (error) {
-      console.error("Erro ao atualizar item no carrinho:", error);
+      console.error("Erro ao atualizar item no servidor:", error);
     }
   };
 
@@ -70,27 +67,19 @@ const ShoppingCart = () => {
       const response = await fetch(`http://localhost:3000/cart/${userID}/${productId}/delete`, {
         method: 'DELETE',
       });
-      if (!response.ok) {
+      if (response.ok) {
+        setItemsCart((prevItems) => prevItems.filter((item) => item.id !== productId));
+      } else {
         console.log("Erro ao deletar item do carrinho");
-        return;
       }
-
-      setItemsCart((prevItems) => prevItems.filter((item) => item.id !== productId));
     } catch (error) {
       console.error("Erro ao remover item do carrinho:", error);
     }
   };
 
   const calculateTotal = () => {
-    return itemsCart.reduce((total, item) => {
-      const price = item.price || 0;
-      const quantity = item.quantity || 1;
-      const itemTotal = price * quantity;
-
-      return total + itemTotal;
-    }, 0);
+    return itemsCart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
-
 
   return (
     <div>
@@ -113,14 +102,12 @@ const ShoppingCart = () => {
               <p>Seu carrinho está vazio.</p>
             )}
           </div>
-
           <div className="flex flex-col md:flex-row items-center justify-between lg:px-6 pb-6 border-b border-gray-200 max-lg:max-w-lg max-lg:mx-auto">
             <h5 className="text-gray-900 font-semibold text-xl leading-9 w-full max-md:text-center max-md:mb-4">
               Total
             </h5>
             <h6 className="font-bold text-3xl lead-10 text-red-600">
-              R${" "}
-              {calculateTotal()}
+              R$ {calculateTotal()}
             </h6>
           </div>
           <div className="max-lg:max-w-lg max-lg:mx-auto">
