@@ -2,16 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 const CardProduct = ({ product }) => {
-
-
   const userID = localStorage.getItem("userId");
-  const navigate = useNavigate()
-
+  const navigate = useNavigate();
 
   console.log("O ID DO USUARIO É:", userID);
-
 
   const handleAddToCart = async () => {
     try {
@@ -37,11 +32,13 @@ const CardProduct = ({ product }) => {
 
   const handleContextMenu = (e) => {
     e.preventDefault();
+    e.stopPropagation(); // Evita a propagação para o card
     navigate(`/admin/edit/${product.id}`);
   };
 
   const handleDelete = async (e) => {
     e.preventDefault();
+    e.stopPropagation(); // Evita a propagação para o card
     
     const confirmDelete = window.confirm("Are you sure you want to delete this product?");
     if (!confirmDelete) return;
@@ -51,9 +48,7 @@ const CardProduct = ({ product }) => {
       console.log("Product deleted successfully:", response.data.message);
       alert("Product deleted successfully!");
       window.location.reload(); 
-
     } catch (error) {
-
       if (error.response && error.response.data) {
         console.error("Error deleting product:", error.response.data);
         alert(`Error: ${error.response.data.message || "Unable to delete product"}`);
@@ -72,11 +67,10 @@ const CardProduct = ({ product }) => {
       ? product.ProductImages[product.ProductImages.length - 1].url
       : product.image;
 
+  const handleCardClick = () => {
+    navigate(`/detail/${product.id}`);
+  };
 
-      const handleCardClick = () => {
-        navigate(`/detail/${product.id}`)
-      }
-  
   return (
     <div onClick={handleCardClick} className="border boder-gray-200 text-white rounded-xl pb-4">
       <div className="flex justify-end gap-4 my-3 mx-2">
