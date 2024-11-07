@@ -6,7 +6,7 @@ const NavBar = () => {
   const { isLoggedIn, logout } = useAuth();
 
   return (
-    <nav className="bg-zinc-100 shadow fixed z-20 w-full text-black flex justify-between px-8 2xl:px-32 py-6 items-center">
+    <nav className="bg-gray-100 shadow fixed z-20 w-full text-black flex justify-between px-8 2xl:px-32 py-6 items-center">
       <ul className="flex md:gap-16 gap-8 items-center">
         <li>
           <Link to="/home">Home</Link>

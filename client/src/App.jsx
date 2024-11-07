@@ -9,6 +9,7 @@ import EditProduct from './pages/admin/EditProduct'
 import Payment from './pages/user/Payment'
 import { AuthProvider } from './pages/AuthProvider'; 
 import Detail from './pages/user/Detail'
+import Orders from './pages/admin/Orders'
 
 
 
@@ -27,6 +28,8 @@ function App() {
         <Route path="/admin" element={<HomeAdmin />} />
         <Route path="/admin/add" element={<AddProject />} />
         <Route path="/admin/edit/:id" element={<EditProduct />} />
+        <Route path="/admin/orders" element={<Orders />} />
+
 
 
         <Route path="/register" element={<Register />} />
