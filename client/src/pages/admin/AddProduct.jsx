@@ -18,7 +18,20 @@ export default function AddProduct() {
   const [images, setImages] = useState([]);          
   const [imagePreviews, setImagePreviews] = useState([]);
 
+  const formatCurrency = (value) => {
+    return value
+      .replace(/\D/g, "") // Remove tudo que não for dígito
+      .replace(/(\d)(\d{2})$/, "$1,$2") // Coloca a vírgula entre os dois últimos números
+      .replace(/(?=(\d{3})+(\D))\B/g, "."); // Adiciona pontos para separar os milhares
+  };
+
+
   const navigate = useNavigate();
+
+  const handlePriceChange = (e) => {
+    const value = e.target.value;
+    setPrice(formatCurrency(value));
+  };
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 85 }, (_, index) => currentYear - index);
@@ -76,7 +89,7 @@ export default function AddProduct() {
       model,
       brand,
       year: Number(year),
-      price: Number(price),
+      price: Number(price.replace(/[^\d,.-]/g, "").replace(",", ".")), 
       images,
       quantity: Number(quantity),
       description,
@@ -166,9 +179,8 @@ export default function AddProduct() {
 
         <div className="sm:col-span-1">
           <Label htmlFor={"price"} text={"Valor"} />
-
           <InputDefault
-            onChange={(e) => setPrice(Number(e.target.value))}
+            onChange={handlePriceChange}
             value={price}
             id={"price"}
             name={"price"}
