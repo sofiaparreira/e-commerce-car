@@ -31,30 +31,31 @@ router.post('/confirm/:userId', async (req, res) => {
     const { userId } = req.params;
 
     try {
-        // 1. Criar um novo pedido para o usuário
-        const newOrder = await Order.create({ userId });
+        // Cria um novo pedido com o status "Pendente"
+        const newOrder = await Order.create({ userId, status: "Pendente" });
 
-        // 2. Buscar todos os itens no carrinho do usuário (sem `orderId` associado)
+        // Busca os itens no carrinho do usuário que ainda não estão associados a um pedido
         const cartItems = await ItemCart.findAll({
             where: {
                 userId,
-                orderId: null, // Somente itens não confirmados
+                orderId: null,
             }
         });
 
-        // 3. Associar cada item do carrinho ao novo pedido
+        // Associa cada item no carrinho ao novo pedido
         for (let item of cartItems) {
-            item.orderId = newOrder.id; // Define o orderId para cada item do carrinho
-            await item.save(); // Salva a mudança no banco de dados
+            item.orderId = newOrder.id; 
+            await item.save(); 
         }
 
-        // 4. Retornar a confirmação de que o pedido foi criado
+        // Retorna uma resposta de sucesso com o pedido criado
         res.status(201).json({ message: "Order confirmed", order: newOrder });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error on confirming order" });
     }
 });
+
 
 
 //mostrar todos os pedidos para o ADMIN

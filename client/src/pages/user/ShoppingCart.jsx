@@ -84,9 +84,34 @@ const ShoppingCart = () => {
   };
 
 
-  const goToPayment = () => {
-    navigate('/payment')
-  }
+  async function createOrder() {
+    try {
+        const response = await fetch(`http://localhost:3000/order/confirm/${userID}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error("Erro ao confirmar pedido");
+        }
+
+        const data = await response.json();
+        console.log("Pedido confirmado:", data);
+
+        if (data.order) {
+            data.order.status = "Pendente";
+
+            setItemsCart([]);
+            
+            navigate(`/payment`);
+        }
+    } catch (error) {
+        console.error("Falha ao confirmar o pedido:", error);
+    }
+}
+
 
   
   return (
@@ -119,7 +144,7 @@ const ShoppingCart = () => {
             </h6>
           </div>
           <div className="max-lg:max-w-lg max-lg:mx-auto">
-              <button onClick={goToPayment} className="w-full rounded-full mt-8 py-4  bg-red-600 text-white font-semibold text-lg text-center transition-all duration-500 hover:bg-red-700"  >
+              <button onClick={createOrder} className="w-full rounded-full mt-8 py-4  bg-red-600 text-white font-semibold text-lg text-center transition-all duration-500 hover:bg-red-700"  >
                 Confirmar Compra
               </button>
           </div>
