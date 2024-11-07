@@ -36,7 +36,7 @@ const HomeAdmin = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentBanner((prevBanner) => (prevBanner + 1) % banners.length)
-    }, 10000) // 1000 =1seg
+    }, 5000) 
     return () => clearInterval(interval)
   }, [banners.length])
 
@@ -68,6 +68,9 @@ const HomeAdmin = () => {
                   <span className='sm:block hidden'>Adicionar produto</span></Link>
           </div>
               <p className='text-gray-600 text-sm mt-1'>Nossos melhores carros esportivos</p>
+
+
+           
  
 
           <div className='mt-16 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 xl:gap-16 gap-8'>

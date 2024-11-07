@@ -11,6 +11,9 @@ const NavBar = () => {
         <li>
           <Link to="/home">Home</Link>
         </li>
+        <li>
+          <Link to="/home">Meus Pedidos</Link>
+        </li>
       </ul>
 
       <ul className="flex gap-12 items-center">
