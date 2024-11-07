@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const carBrands = [
-  'Toyota', 'Honda', 'Ford', 'Chevrolet', 'Nissan', 'BMW', 'Mercedes-Benz', 'Audi', 'Volkswagen'
+  'Toyota', 'Honda', 'Ford', 'Chevrolet', 'Nissan', 'BMW', 'Mercedes-Benz', 'Audi', 'Volkswagen', 'Mazda'
   // Adicione mais marcas conforme necessário
 ];
 

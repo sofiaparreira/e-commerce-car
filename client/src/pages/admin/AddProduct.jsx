@@ -18,20 +18,13 @@ export default function AddProduct() {
   const [images, setImages] = useState([]);          
   const [imagePreviews, setImagePreviews] = useState([]);
 
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 85 }, (_, index) => currentYear - index);
 
   async function addProduct(productData) {
     try {
-      const formData = new FormData();
-      Object.entries(productData).forEach(([key, value]) => {
-        formData.append(key, value);
-      });
-      console.log(...formData.entries());
-
       const response = await fetch("http://localhost:3000/products/add", {
         method: "POST",
         headers: {
@@ -90,25 +83,23 @@ export default function AddProduct() {
       power: Number(power),
       engine,
     };
-    console.log(product)
+    console.log(product);
     addProduct(product);
   };
 
-  
-  
-
-
   return (
     <>
-    <div className="m-8 ">
-    <Link to='/admin' className="rounded-full bg-red-100 w-8 h-8 flex justify-center items-center">
-        <svg  xmlns="http://www.w3.org/2000/svg" height="14" width="8.75" viewBox="0 0 320 512"><path className="fill-red-600" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/></svg>
-    </Link>
-    </div>
-    <form className="mx-8 sm:mx-20 lg:mx-48 my-16">
-      <h2 className="text-xl border-b border-red-600 pb-4 font-semibold text-gray-900">
-        Adicionar Produto
-      </h2>
+      <div className="m-8 ">
+        <Link to='/admin' className="rounded-full bg-red-100 w-8 h-8 flex justify-center items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" height="14" width="8.75" viewBox="0 0 320 512">
+            <path className="fill-red-600" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z"/>
+          </svg>
+        </Link>
+      </div>
+      <form className="mx-8 sm:mx-20 lg:mx-48 my-16">
+        <h2 className="text-xl border-b border-red-600 pb-4 font-semibold text-gray-900">
+          Adicionar Produto
+        </h2>
       <div className="grid grid-cols-4 gap-y-6 gap-x-8 mt-4 border-b border-gray-900/10 pb-16">
         <div className="sm:col-span-4">
           <label
@@ -181,6 +172,7 @@ export default function AddProduct() {
             value={price}
             id={"price"}
             name={"price"}
+            placeholder="R$ 0,00"
           />
         </div>
 
@@ -237,10 +229,7 @@ export default function AddProduct() {
               </div>
             )}
             <div className="text-center">
-              <PhotoIcon
-                aria-hidden="true"
-                className="mx-auto h-12 w-12 text-gray-300"
-              />
+              <PhotoIcon aria-hidden="true" className="mx-auto h-12 w-12 text-gray-300" />
               <div className="mt-6 flex text-sm text-gray-600">
                 <label
                   htmlFor="file-upload"
@@ -262,24 +251,19 @@ export default function AddProduct() {
             </div>
           </div>
         </div>
-      </div>{" "}
-      {/* grid end */}
-      <div className="mt-6 flex items-center justify-end gap-x-12">
-        <Link
-          to="/admin"
-          type="button"
-          className="text-sm/6 font-semibold text-gray-900"
-        >
-          Cancel
-        </Link>
-        <button
-          type="submit"
-          onClick={handleSubmit}
-          className="rounded-md bg-red-600 px-16 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
-        >
-          Save
-        </button>
-      </div>
+        <div className="mt-6 flex items-center justify-end gap-x-12">
+          <Link to="/admin" className="text-sm/6 font-semibold text-gray-900">
+            Cancel
+          </Link>
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="rounded-md bg-red-600 px-16 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+          >
+            Save
+          </button>
+        </div>
+        </div>
     </form>
     </>
   );
