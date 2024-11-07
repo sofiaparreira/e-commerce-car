@@ -53,8 +53,8 @@ const Detail = () => {
                     key={img.id}
                     src={img.url}
                     alt={`Thumbnail ${index + 1}`}
-                    className="w-20 h-20 object-cover cursor-pointer"
-                    onClick={() => setMainImage(img.url)} // Atualiza a imagem principal
+                    className="w-20 h-20 object-cover cursor-pointer transition-transform transform hover:scale-100 hover:border-4 hover:border-gray-300 hover:shadow-lg"
+                    onClick={() => setMainImage(img.url)}
                   />
                 ))}
               </div>
