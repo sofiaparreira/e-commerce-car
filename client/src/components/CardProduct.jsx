@@ -82,7 +82,7 @@ const CardProduct = ({ product }) => {
         </svg>
       </div>
       <img
-        className="rounded-2xl object-cover object-center h-72 w-full"
+        className="rounded-2xl object-cover object-center h-80 px-2 w-full "
         src={firstImage}
         alt={product.model}
       />

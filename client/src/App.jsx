@@ -10,6 +10,7 @@ import Payment from './pages/user/Payment'
 import { AuthProvider } from './pages/AuthProvider'; 
 import Detail from './pages/user/Detail'
 import Orders from './pages/admin/Orders'
+import MyOrders from './pages/user/MyOrders'
 
 
 
@@ -22,6 +23,8 @@ function App() {
         <Route path="/shoppingCart" element={<ShoppingCart />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/detail/:id" element={<Detail />} />
+        <Route path="/my-orders" element={<MyOrders />} />
+
 
 
 

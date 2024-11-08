@@ -25,7 +25,7 @@ const Detail = () => {
     handleGetDetail();
   }, [id]);
 
-  // Função para formatar o preço
+
   const formatPrice = (price) => {
     return new Intl.NumberFormat("pt-BR", {
       style: "currency",
@@ -46,17 +46,16 @@ const Detail = () => {
                 <img
                   src={mainImage}
                   alt={product.model}
-                  className="max-lg:mx-auto lg:ml-auto h-full object-cover"
+                  className="w-96 mx-auto h-full object-cover"
                 />
               </div>
-              {/* Lista de miniaturas */}
               <div className="flex mt-4 space-x-2 overflow-x-auto">
                 {product.ProductImages.map((img, index) => (
                   <img
                     key={img.id}
                     src={img.url}
                     alt={`Thumbnail ${index + 1}`}
-                    className="w-20 h-20 object-cover cursor-pointer transition-transform transform hover:scale-100 hover:border-4 hover:border-gray-300 hover:shadow-lg"
+                    className="w-20 object-cover cursor-pointer transition-transform transform hover:scale-100 hover:border-4 hover:border-gray-300 hover:shadow-lg"
                     onClick={() => setMainImage(img.url)}
                   />
                 ))}
