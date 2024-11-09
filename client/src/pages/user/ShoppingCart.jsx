@@ -104,13 +104,13 @@ const ShoppingCart = () => {
         console.log("Pedido confirmado:", data);
 
         if (data) {
-            setItemsCart([]);          
-            navigate(`/payment`);
-        }
+          setItemsCart([]);
+          navigate(`/payment`, { state: { orderId: data.id, totalPrice } });
+      }
     } catch (error) {
         console.error("Falha ao confirmar o pedido:", error);
     }
-  }
+}
 
   return (
     <div>

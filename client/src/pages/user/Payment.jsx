@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Payment = () => {
   const [isPaid, setIsPaid] = useState(false);
@@ -7,6 +7,8 @@ const Payment = () => {
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const location = useLocation();
+  const { orderId, totalPrice } = location.state || {};
 
 
 
@@ -20,6 +22,8 @@ const Payment = () => {
     <>
       {!isPaid && (
         <>
+        <h2>ID do Pedido: {orderId}</h2>
+        <h3>Valor Total: R$ {totalPrice}</h3>
           <ol class="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base mx-auto my-16">
             <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
               <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
