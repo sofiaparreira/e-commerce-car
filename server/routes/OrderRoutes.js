@@ -1,71 +1,65 @@
+// routes/orderRoutes.js
 const express = require('express');
-const ItemCart = require('../models/ItemCart');
-const Product = require('../models/Product');
-const User = require('../models/User');
-const Order = require('../models/Order')
-const router = express.Router()
+const router = express.Router();
+const Order = require('../models/Order');
 
-
-router.get('/:userId', async (req, res) => {
-    const { userId } = req.params;
-
+// Criar novo pedido
+router.post('/add', async (req, res) => {
     try {
-        const orders = await Order.findAll({
-            where: { userId: userId },
-            include: [
-                {
-                    model: ItemCart, 
-                    include: [Product] 
-                }
-            ]
-        });
+        const { userId, productIds, totalPrice } = req.body;
 
-        res.json(orders);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error on get orders" });
-    }
-});
-
-router.post('/add/:userId', async (req, res) => {
-    const { userId } = req.params;
-
-    try {
-        const newOrder = await Order.create({ userId, status: "Pendente" });
-
-        const cartItems = await ItemCart.findAll({
-            where: {
-                userId,
-                orderId: null,
-            }
-        });
-
-        for (let item of cartItems) {
-            item.orderId = newOrder.id; 
-            await item.save(); 
+        if (!userId || !productIds || !totalPrice) {
+            return res.status(400).json({ error: 'Preencha todos os campos obrigatórios.' });
         }
 
-        res.status(201).json({ message: "Order confirmed", order: newOrder });
+        const newOrder = await Order.create({
+            userId,
+            productIds,
+            totalPrice,
+            status: 'Aguardando pagamento'
+        });
+
+        res.status(201).json(newOrder);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error on confirming order" });
+        console.error("Erro ao criar pedido:", error);
+        res.status(500).json({ error: "Erro ao criar pedido." });
     }
 });
 
+// Obter todos os pedidos de um usuário
+router.get('/user/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const order = await Order.findAll({
+            where: { userId },
+            order: [['date', 'DESC']]
+        });
+        res.status(200).json(order);
+    } catch (error) {
+        console.error("Erro ao buscar pedidos:", error);
+        res.status(500).json({ error: "Erro ao buscar pedidos." });
+    }
+});
 
-
-//mostrar todos os pedidos para o ADMIN
-router.get('/', async (req, res) => {
-    const { id } = req.params
+// Atualizar status do pedido
+router.put('/:orderId/status', async (req, res) => {
+    const { orderId } = req.params;
+    const { status } = req.body;
 
     try {
-        
+        const order = await Order.findByPk(orderId);
+        if (!order) {
+            return res.status(404).json({ error: 'Pedido não encontrado.' });
+        }
+
+        order.status = status;
+        await order.save();
+
+        res.status(200).json({ message: 'Status do pedido atualizado com sucesso.', order });
     } catch (error) {
-        
+        console.error("Erro ao atualizar status do pedido:", error);
+        res.status(500).json({ error: "Erro ao atualizar status do pedido." });
     }
-})
-
-
-
+});
 
 module.exports = router;

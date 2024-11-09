@@ -1,49 +1,36 @@
-const sequelize = require('../config/database')
+// models/Order.js
 const { DataTypes } = require('sequelize');
-const User = require('./User')
-const Product = require('./Product')
-
-
+const sequelize = require('../config/database');
 
 const Order = sequelize.define('Order', {
     id: {
+        type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false
+    },
+    userId: {
         type: DataTypes.INTEGER,
         allowNull: false
     },
-
+    productIds: {
+        type: DataTypes.JSON, 
+        allowNull: false
+    },
+    totalPrice: {
+        type: DataTypes.DOUBLE,
+        allowNull: false
+    },
     status: {
-        type: DataTypes.ENUM('Pendente', 'Pago', 'Enviado', 'Entregue')
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: 'Aguardando pagamento'
     },
-
-    productId: {
-        type: DataTypes.INTEGER,
-        references: {
-            model: Product,
-            key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-    },
-
-    userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false, 
-        references: {
-            model: User,
-            key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+    date: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
     }
-
-})
-
-
-Order.belongsTo(User, { foreignKey: 'userId'})
-Order.belongsTo(Product, {foreignKey: 'productId'})
-User.hasMany(Order, { foreignKey: 'userId'})
-Product.hasMany(Order, { foreignKey: 'productId'})
+});
 
 module.exports = Order;

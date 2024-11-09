@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ItemCart from "../../components/ItemCart";
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom';
 
 const ShoppingCart = () => {
   const [itemsCart, setItemsCart] = useState([]);
   const userID = localStorage.getItem("userId");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -83,14 +83,17 @@ const ShoppingCart = () => {
     return itemsCart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
-
   async function createOrder() {
     try {
-        const response = await fetch(`http://localhost:3000/order/confirm/${userID}`, {
+        const productIds = itemsCart.map(item => item.id);
+        const totalPrice = calculateTotal();
+
+        const response = await fetch(`http://localhost:3000/order/add`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify({ userId: userID, productIds, totalPrice })
         });
 
         if (!response.ok) {
@@ -100,20 +103,15 @@ const ShoppingCart = () => {
         const data = await response.json();
         console.log("Pedido confirmado:", data);
 
-        if (data.order) {
-            data.order.status = "Pendente";
-
-            setItemsCart([]);
-            
+        if (data) {
+            setItemsCart([]);          
             navigate(`/payment`);
         }
     } catch (error) {
         console.error("Falha ao confirmar o pedido:", error);
     }
-}
+  }
 
-
-  
   return (
     <div>
       <section className="py-24 relative">
@@ -144,7 +142,7 @@ const ShoppingCart = () => {
             </h6>
           </div>
           <div className="max-lg:max-w-lg max-lg:mx-auto">
-              <button onClick={createOrder} className="w-full rounded-full mt-8 py-4  bg-red-600 text-white font-semibold text-lg text-center transition-all duration-500 hover:bg-red-700"  >
+              <button onClick={createOrder} className="w-full rounded-full mt-8 py-4  bg-red-600 text-white font-semibold text-lg text-center transition-all duration-500 hover:bg-red-700">
                 Confirmar Compra
               </button>
           </div>
