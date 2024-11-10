@@ -5,10 +5,10 @@ const CardOrders = ({ order, products }) => {
 
   const handleStatusClick = () => {
     setStatus((prevStatus) => {
-      if (prevStatus === "Pendente") return "Pago";
+      if (prevStatus === "Aguardando Pagamento") return "Pago";
       if (prevStatus === "Pago") return "Enviado";
       if (prevStatus === "Enviado") return "Entregue";
-      return "Pendente";
+      return "Entregue"
     });
   };
 
@@ -23,13 +23,17 @@ const CardOrders = ({ order, products }) => {
         <span
           onClick={handleStatusClick}
           className={`${
-            status === "Pendente"
+            status === "Aguardando Pagamento"
               ? "bg-red-100 text-red-700"
               : status === "Pago"
               ? "bg-green-100 text-green-700"
               : status === "Enviado"
               ? "bg-orange-100 text-orange-700"
-              : "bg-blue-100 text-blue-700"
+              : status === "Entregue"
+              ? "bg-blue-100 text-blue-700"
+              
+              
+              : "bg-red-100 text-red-700"
           } px-4 flex items-center text-sm rounded cursor-pointer`}
         >
           {status}

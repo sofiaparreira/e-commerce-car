@@ -18,28 +18,29 @@ const Payment = () => {
       alert("Erro: ID do pedido não encontrado.");
       return;
     }
-  
+
     try {
-      const response = await fetch(`http://localhost:3000/order/${orderId}/status`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ status: "Pago" }),
-      });
-      
-    
-  
+      const response = await fetch(
+        `http://localhost:3000/order/${orderId}/status`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status: "Pago" }),
+        }
+      );
+
       // Verifique a resposta da API
       const text = await response.text(); // Lê a resposta como texto
       console.log("Resposta da API:", text); // Verifica o que está vindo da API
-  
+
       // Se a resposta não estiver vazia, tente parsear
       let data = {};
       if (text) {
         data = JSON.parse(text); // Apenas parseia se a resposta não estiver vazia
       }
-  
+
       if (response.ok) {
         setIsPaid(true); // Marca o pedido como pago
       } else {
@@ -51,7 +52,6 @@ const Payment = () => {
       alert("Erro ao tentar realizar o pagamento.");
     }
   };
-  
 
   return (
     <>
@@ -59,7 +59,74 @@ const Payment = () => {
         <>
           <h2>ID do Pedido: {orderId}</h2>
           <h3>Valor Total: R$ {totalPrice}</h3>
+          <ol class="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base mx-auto my-16">
+            <li class="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+              <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
+                <svg
+                  class="me-2 h-4 w-4 sm:h-5 sm:w-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                Carrinho
+              </span>
+            </li>
 
+            <li class="after:border-1 flex items-center text-black text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+              <span class="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] sm:after:hidden">
+                <svg
+                  class="me-2 h-4 w-4 sm:h-5 sm:w-5"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                  />
+                </svg>
+                Pagamento
+              </span>
+            </li>
+
+            <li class="flex shrink-0 items-center">
+              <svg
+                class="me-2 h-4 w-4 sm:h-5 sm:w-5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                />
+              </svg>
+              Confirmação
+            </li>
+          </ol>
           <div className="font-sans bg-white p-4">
             <div className="max-w-4xl mx-auto">
               {/* Formulário de pagamento */}
@@ -104,6 +171,116 @@ const Payment = () => {
                 </div>
               </div>
 
+              <div class="grid md:grid-cols-2 gap-4 mt-12">
+                <div class="md:col-span-2">
+                  <form>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Street address"
+                          class="px-4 py-3 bg-white text-gray-800 w-full text-sm border-2 rounded-md focus:border-red-500 outline-none"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="City"
+                          class="px-4 py-3 bg-white text-gray-800 w-full text-sm border-2 rounded-md focus:border-red-500 outline-none"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="State"
+                          class="px-4 py-3 bg-white text-gray-800 w-full text-sm border-2 rounded-md focus:border-red-500 outline-none"
+                        />
+                      </div>
+                      <div>
+                        <input
+                          type="number"
+                          placeholder="Zip Code"
+                          class="px-4 py-3 bg-white text-gray-800 w-full text-sm border-2 rounded-md focus:border-red-500 outline-none"
+                        />
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+              <div class="grid md:grid-cols-2 gap-4 mt-12">
+                <div class="md:col-span-2">
+                  <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="flex items-center">
+                      <input
+                        type="radio"
+                        class="w-5 h-5 cursor-pointer"
+                        id="card"
+                        checked
+                      />
+                      <label for="card" class="ml-4 flex gap-2 cursor-pointer">
+                        <img
+                          src="https://readymadeui.com/images/visa.webp"
+                          class="w-12"
+                          alt="card1"
+                        />
+                        <img
+                          src="https://readymadeui.com/images/american-express.webp"
+                          class="w-12"
+                          alt="card2"
+                        />
+                        <img
+                          src="https://readymadeui.com/images/master.webp"
+                          class="w-12"
+                          alt="card3"
+                        />
+                      </label>
+                    </div>
+
+                    <div class="flex items-center">
+                      <input
+                        type="radio"
+                        class="w-5 h-5 cursor-pointer"
+                        id="paypal"
+                      />
+                      <label
+                        for="paypal"
+                        class="ml-4 flex gap-2 cursor-pointer"
+                      >
+                        <img
+                          src="https://readymadeui.com/images/paypal.webp"
+                          class="w-20"
+                          alt="paypalCard"
+                        />
+                      </label>
+                    </div>
+                  </div>
+
+                  <div class="grid sm:grid-cols-4 gap-4 mt-4">
+                    <div class="col-span-2">
+                      <input
+                        type="number"
+                        placeholder="Card number"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border-2 rounded-md focus:border-red-500 outline-none"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="number"
+                        placeholder="EXP."
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border-2 rounded-md focus:border-red-500 outline-none"
+                      />
+                    </div>
+                    <div>
+                      <input
+                        type="number"
+                        placeholder="CVV"
+                        class="px-4 py-3 bg-white text-gray-800 w-full text-sm border-2 rounded-md focus:border-red-500 outline-none"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div className="flex flex-wrap justify-end gap-4 mt-12">
                 <button
                   onClick={handlePaymentPago} // Chama a função para realizar o pagamento
@@ -126,7 +303,8 @@ const Payment = () => {
 
           <div className="mt-4 flex flex-col items-center justify-center py-64">
             <p className="text-center text-gray-600 flex gap-2">
-              Obrigado, <span className="first-letter:uppercase">{firstName}</span>
+              Obrigado,{" "}
+              <span className="first-letter:uppercase">{firstName}</span>
             </p>
             <p className="mt-4 text-green-500 text-xl mb-4">
               Pagamento efetuado com sucesso
