@@ -19,6 +19,7 @@ export default function Login() {
       const data = response.data;
       console.log('Response from API:', data);
       localStorage.setItem("userId", data.ID);
+      localStorage.setItem("userRole", data.role)
       console.log(localStorage.getItem("userId"))
       console.log(localStorage.getItem("userRole"))
   
