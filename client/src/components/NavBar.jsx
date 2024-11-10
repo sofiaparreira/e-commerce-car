@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import { useAuth } from "../pages/AuthProvider";
 
 const NavBar = () => {
-  const { isLoggedIn, logout, role } = useAuth(); 
+  const { isLoggedIn, logout} = useAuth(); 
+  const role = localStorage.getItem("userRole")
+  console.log('User Role local storage:', role); 
+
 
   console.log(role)
   return (

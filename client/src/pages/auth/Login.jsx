@@ -20,6 +20,7 @@ export default function Login() {
       console.log('Response from API:', data);
       localStorage.setItem("userId", data.ID);
       console.log(localStorage.getItem("userId"))
+      console.log(localStorage.getItem("userRole"))
   
       if (!data.token) {
         console.error('Token não encontrado na resposta.');
@@ -29,10 +30,12 @@ export default function Login() {
       localStorage.setItem('token', data.token);
       if (data.userId) {
         localStorage.setItem('userId', data.id);
+        localStorage.setItem("userRole", data.role)
+        
       }
   
       console.log('User Role:', data.role); 
-  
+   
       if (data.role === "admin") {
         console.log('Navegando para /admin');
         navigate('/admin');
