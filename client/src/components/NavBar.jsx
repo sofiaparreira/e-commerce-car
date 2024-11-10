@@ -29,7 +29,7 @@ const NavBar = () => {
       </ul>
 
       <ul className="flex gap-12 items-center">
-        {role !== "admin" && (
+        {role !== "user" && (
           <li>
             <Link to="/shoppingCart">
               <svg

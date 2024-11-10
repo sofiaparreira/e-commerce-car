@@ -9,9 +9,8 @@ const Payment = () => {
   const [email, setEmail] = useState("");
   const location = useLocation();
 
-  const { orderId, totalPrice } = location.state || {}; // Verifique se orderId e totalPrice são passados corretamente
+  const { orderId, totalPrice } = location.state || {}; 
 
-  // Função para atualizar o status do pedido no backend
   const handlePaymentPago = async () => {
     if (!orderId) {
       console.error("Pedido não encontrado!");
