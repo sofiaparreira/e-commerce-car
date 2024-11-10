@@ -41,6 +41,18 @@ router.get('/user/:userId', async (req, res) => {
     }
 });
 
+router.get('/', async (req, res) => {
+    try {
+        const orders = await Order.findAll({
+            order: [['date', 'DESC']]
+        });
+        res.status(200).json(orders);
+    } catch (error) {
+        console.error("Erro ao buscar pedidos:", error);
+        res.status(500).json({ error: "Erro ao buscar pedidos." });
+    }
+});
+
 // Atualizar status do pedido
 router.put('/:orderId/status', async (req, res) => {
     const { orderId } = req.params;

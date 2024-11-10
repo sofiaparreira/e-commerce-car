@@ -5,10 +5,7 @@ import { useAuth } from "../pages/AuthProvider";
 const NavBar = () => {
   const { isLoggedIn, logout} = useAuth(); 
   const role = localStorage.getItem("userRole")
-  console.log('User Role local storage:', role); 
 
-
-  console.log(role)
   return (
     <nav className="bg-gray-100 shadow fixed z-20 w-full text-black flex justify-between px-8 2xl:px-32 py-6 items-center">
       <ul className="flex md:gap-16 gap-8 items-center">

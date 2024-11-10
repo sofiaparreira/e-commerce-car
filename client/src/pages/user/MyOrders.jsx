@@ -6,25 +6,36 @@ const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [products, setProducts] = useState([]);
   const userId = localStorage.getItem('userId');
-
-  // Busca os pedidos do usuário
+  const role = localStorage.getItem("userRole");
+  console.log(role);
+  
   useEffect(() => {
+    
     const fetchOrders = async () => {
-      try {
-        const response = await fetch(`http://localhost:3000/order/user/${userId}`);
-        if (!response.ok) throw new Error('Erro ao buscar pedidos');
-        
-        const data = await response.json();
-        setOrders(data);
-      } catch (error) {
-        console.error('Erro ao buscar pedidos:', error);
+    try {
+      let response;
+      
+      if (role === "admin") {
+        response = await fetch(`http://localhost:3000/order/`);
+        console.log("AAAAAAAAAAAAAAAA")
+      } else {
+        response = await fetch(`http://localhost:3000/order/user/${userId}`);
+        console.log("não funciona essa bomba")
       }
-    };
+      if (!response.ok) throw new Error('Erro ao buscar pedidos');
+
+      const data = await response.json();
+      setOrders(data);
+      console.log(orders)
+    } catch (error) {
+      console.error('Erro ao buscar pedidos:', error);
+    }
+  };
 
     if (userId) fetchOrders();
   }, [userId]);
 
-  // Busca todos os produtos
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -47,9 +58,9 @@ const MyOrders = () => {
         <h1 className="text-2xl font-semibold pb-1">Meus Pedidos</h1>
         <p className="mb-16 text-sm">Histórico de todas as suas compras!</p>
         <div className="grid grid-cols-2 gap-4">
+          
           {orders.length > 0 ? (
             orders.map(order => {
-              // Filtra os produtos que pertencem ao pedido atual
               const orderProducts = products.filter(product =>
                 order.productIds.includes(product.id)
               );
