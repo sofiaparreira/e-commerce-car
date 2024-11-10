@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 
-const CardOrders = ({ order, products }) => {
+const CardOrders = ({ order, products, userRole }) => {
   const [status, setStatus] = useState(order?.status || "Pendente");
 
   const handleStatusChange = async (event) => {
+    if (userRole !== "admin") {
+      alert("Você não tem permissão para alterar o status.");
+      return;
+    }
+
     const newStatus = event.target.value;
     setStatus(newStatus);
 
     try {
-      // Faz uma requisição para atualizar o status do pedido no backend
       const response = await fetch(`http://localhost:3000/order/${order.id}/status`, {
         method: "PUT",
         headers: {
@@ -39,6 +43,7 @@ const CardOrders = ({ order, products }) => {
         <select
           value={status}
           onChange={handleStatusChange}
+          disabled={userRole !== "admin"}
           className={`${
             status === "Aguardando Pagamento"
               ? "bg-red-100 text-red-700"
@@ -49,7 +54,7 @@ const CardOrders = ({ order, products }) => {
               : status === "Entregue"
               ? "bg-blue-100 text-blue-700"
               : "bg-red-100 text-red-700"
-          } px-4 py-2 flex items-center text-sm rounded cursor-pointer`}
+          } px-4 py-2 flex items-center text-sm rounded cursor-pointer ${userRole !== "admin" ? "cursor-not-allowed opacity-50" : ""}`}
         >
           <option value="Aguardando Pagamento">Aguardando Pagamento</option>
           <option value="Pago">Pago</option>

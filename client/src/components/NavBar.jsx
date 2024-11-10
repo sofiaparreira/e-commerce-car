@@ -4,6 +4,8 @@ import { useAuth } from "../pages/AuthProvider";
 
 const NavBar = () => {
   const { isLoggedIn, logout, role } = useAuth(); 
+
+  console.log(role)
   return (
     <nav className="bg-gray-100 shadow fixed z-20 w-full text-black flex justify-between px-8 2xl:px-32 py-6 items-center">
       <ul className="flex md:gap-16 gap-8 items-center">
@@ -29,7 +31,7 @@ const NavBar = () => {
       </ul>
 
       <ul className="flex gap-12 items-center">
-        {role !== "user" && (
+        {role !== "admin" && (
           <li>
             <Link to="/shoppingCart">
               <svg

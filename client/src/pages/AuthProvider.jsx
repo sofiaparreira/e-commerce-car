@@ -5,21 +5,25 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [role, setRole] = useState(null);
+  const [loading, setLoading] = useState(true); // Estado de carregamento
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    const userRole = localStorage.getItem('role'); // Adiciona role do localStorage
+    const userRole = localStorage.getItem('role');
     setIsLoggedIn(!!token);
-    setRole(userRole); // Define o valor de role
+    setRole(userRole);
+    setLoading(false); // Dados carregados, setamos loading para falso
   }, []);
 
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
-    localStorage.removeItem('role'); // Remove role ao fazer logout
+    localStorage.removeItem('role');
     setIsLoggedIn(false);
-    setRole(null); // Limpa o valor de role
+    setRole(null);
   };
+
+  if (loading) return null; // Renderizar nada enquanto carrega
 
   return (
     <AuthContext.Provider value={{ isLoggedIn, role, logout }}>
@@ -28,6 +32,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+export const useAuth = () => useContext(AuthContext);
