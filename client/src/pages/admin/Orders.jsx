@@ -51,7 +51,7 @@ const Orders = () => {
                     order.productIds.includes(product.id)
                   );
 
-                  return <CardOrders key={order.id} order={order} products={orderProducts} />;
+                  return <CardOrders userRole={role} key={order.id} order={order} products={orderProducts} />;
                 })
               ) : (
                 <p>Você não possui pedidos ainda.</p>
