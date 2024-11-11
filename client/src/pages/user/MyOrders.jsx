@@ -16,11 +16,9 @@ const MyOrders = () => {
       let response;
       
       if (role === "admin") {
-        response = await fetch(`http://localhost:3000/order/`);
-        console.log("AAAAAAAAAAAAAAAA")
+        response = await fetch(`http://localhost:3000/order/`);  
       } else {
         response = await fetch(`http://localhost:3000/order/user/${userId}`);
-        console.log("não funciona essa bomba")
       }
       if (!response.ok) throw new Error('Erro ao buscar pedidos');
 

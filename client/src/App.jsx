@@ -31,7 +31,7 @@ function App() {
         <Route path="/admin" element={<HomeAdmin />} />
         <Route path="/admin/add" element={<AddProject />} />
         <Route path="/admin/edit/:id" element={<EditProduct />} />
-        <Route path="/admin/orders" element={<MyOrders />} />
+        <Route path="/admin/orders" element={<Orders />} />
 
 
 
