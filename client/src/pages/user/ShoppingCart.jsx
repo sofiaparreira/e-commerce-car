@@ -124,6 +124,7 @@ const ShoppingCart = () => {
               itemsCart.map((product) => (
                 <ItemCart
                   key={product.id}
+                  userID={userID}
                   product={product}
                   onDelete={() => handleDeleteItem(product.id)}
                   onUpdate={handleUpdateItem}

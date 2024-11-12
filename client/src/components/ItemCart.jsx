@@ -1,43 +1,46 @@
-// ItemCart.js
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const ItemCart = ({ product, onUpdate, onDelete }) => {
+const ItemCart = ({ product, onUpdate, onDelete, userID }) => {
   const [quantity, setQuantity] = useState(product.quantity || 1);
 
-  // Sincroniza a quantidade inicial do produto quando o `product.quantity` muda
-  useEffect(() => {
-    setQuantity(product.quantity || 1);
-  }, [product.quantity]);
+  const updateQuantity = async (newQuantity) => {
+    try {
+      const response = await fetch(`http://localhost:3000/cart/${userID}/${product.id}/update`, {  
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ quantity: newQuantity }),
+      });
 
-  const imageUrl = product.ProductImages && product.ProductImages.length > 0
-    ? product.ProductImages[0].url
-    : "https://pagedone.io/asset/uploads/1701162826.png";
+      if (!response.ok) {
+        throw new Error('Erro ao atualizar item no carrinho');
+      }
 
-  const handleIncreaseQuantity = () => {
-    if (quantity < product.stock) {
-      const newQuantity = quantity + 1;
-      setQuantity(newQuantity);
-      onUpdate(product.id, newQuantity);
-    }
-  };
-
-  const handleDecreaseQuantity = () => {
-    if (quantity > 1) {
-      const newQuantity = quantity - 1;
-      setQuantity(newQuantity);
-      onUpdate(product.id, newQuantity);
+      const data = await response.json();
+      console.log('Item atualizado com sucesso:', data.cart);
+    } catch (error) {
+      console.error(error);
     }
   };
 
   const handleQuantityChange = (e) => {
     const newQuantity = parseInt(e.target.value, 10);
-    if (newQuantity >= 1 && newQuantity <= product.stock) {
-      setQuantity(newQuantity);
-      onUpdate(product.id, newQuantity);
-    }
+    setQuantity(newQuantity);
   };
 
+  useEffect(() => {
+    if (quantity !== product.quantity) {
+      updateQuantity(quantity);
+    }
+  }, [quantity]);
+
+  const imageUrl = product.ProductImages && product.ProductImages.length > 0
+    ? product.ProductImages[0].url
+    : "https://pagedone.io/asset/uploads/1701162826.png";
+
   const handleRemoveItem = () => {
+    console.log("Removendo item:", product.id);
     onDelete(product.id);
   };
 
@@ -60,30 +63,7 @@ const ItemCart = ({ product, onUpdate, onDelete }) => {
         
         <div className="flex justify-between items-center mt-8">
           <div className="flex items-center gap-2">
-            <button
-              onClick={handleDecreaseQuantity}
-              className="text-gray-500 bg-gray-200 hover:bg-gray-300 rounded-full w-8 h-8 flex items-center justify-center"
-              disabled={quantity <= 1}
-            >
-              -
-            </button>
-            
-            <input
-              type="number"
-              className="border border-gray-200 rounded-full w-10 aspect-square outline-none text-gray-900 font-semibold text-sm py-1.5 px-3 bg-gray-100 text-center"
-              value={quantity}
-              onChange={handleQuantityChange}
-              min="1"
-              max={product.stock}
-            />
-
-            <button
-              onClick={handleIncreaseQuantity}
-              className="text-gray-500 bg-gray-200 hover:bg-gray-300 rounded-full w-8 h-8 flex items-center justify-center"
-              disabled={quantity >= product.stock}
-            >
-              +
-            </button>
+            <input type="number" value={quantity} onChange={handleQuantityChange}/>
           </div>
 
           <button
@@ -94,7 +74,7 @@ const ItemCart = ({ product, onUpdate, onDelete }) => {
           </button>
 
           <h6 className="text-red-600 font-bold text-xl leading-9 text-right ml-auto">
-            R$ {product.price * quantity}
+            R$ {(product.price * quantity).toFixed(2)}
           </h6>
         </div>
       </div>
