@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ItemCart from "../../components/ItemCart";
 import { Link, useNavigate } from 'react-router-dom';
-
+import NavBar from '../../components/NavBar'
 const ShoppingCart = () => {
   const [itemsCart, setItemsCart] = useState([]);
   const userID = localStorage.getItem("userId");
@@ -114,6 +114,7 @@ const ShoppingCart = () => {
 
   return (
     <div>
+      <NavBar/>
       <section className="py-24 relative">
         <div className="lg:max-w-7xl 2xl:px-0 lg:px-8 px-16 mx-auto">
           <h2 className="title font-bold text-3xl leading-10 mb-8 text-zinc-900 max-lg:text-center">

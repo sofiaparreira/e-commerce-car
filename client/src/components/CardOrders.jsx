@@ -79,7 +79,7 @@ const CardOrders = ({ order, products, userRole }) => {
                   alt={product.model}
                 />
                 <div className="flex flex-col justify-between">
-                  <h2 className="font-semibold text-lg">{product.model}</h2>
+                    <h2 className="font-semibold text-lg">{product.model}</h2>
                   <p className="text-gray-600">{product.brand}</p>
                   <span className="font-bold text-red-600">
                     R${" "}
