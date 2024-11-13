@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ItemCart from "../../components/ItemCart";
 import { Link, useNavigate } from 'react-router-dom';
-
+import NavBar from '../../components/NavBar'
 const ShoppingCart = () => {
   const [itemsCart, setItemsCart] = useState([]);
   const userID = localStorage.getItem("userId");
@@ -99,7 +99,6 @@ const ShoppingCart = () => {
         if (!response.ok) {
             throw new Error("Erro ao confirmar pedido");
         }
-//teste
         const data = await response.json();
         console.log("Pedido confirmado:", data);
 
@@ -114,6 +113,7 @@ const ShoppingCart = () => {
 
   return (
     <div>
+      <NavBar/>
       <section className="py-24 relative">
         <div className="lg:max-w-7xl 2xl:px-0 lg:px-8 px-16 mx-auto">
           <h2 className="title font-bold text-3xl leading-10 mb-8 text-zinc-900 max-lg:text-center">
@@ -124,6 +124,7 @@ const ShoppingCart = () => {
               itemsCart.map((product) => (
                 <ItemCart
                   key={product.id}
+                  userID={userID}
                   product={product}
                   onDelete={() => handleDeleteItem(product.id)}
                   onUpdate={handleUpdateItem}

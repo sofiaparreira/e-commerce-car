@@ -4,8 +4,8 @@ const CardOrders = ({ order, products, userRole }) => {
   const [status, setStatus] = useState(order?.status || "Pendente");
 
   const handleStatusChange = async (event) => {
+    // Só permite alterar o status se o usuário for admin
     if (userRole !== "admin") {
-      alert("Você não tem permissão para alterar o status.");
       return;
     }
 
@@ -43,7 +43,7 @@ const CardOrders = ({ order, products, userRole }) => {
         <select
           value={status}
           onChange={handleStatusChange}
-          disabled={userRole !== "admin"}
+          disabled={userRole !== "admin"} // Só pode mudar se for admin
           className={`${
             status === "Aguardando Pagamento"
               ? "bg-red-100 text-red-700"
@@ -79,7 +79,7 @@ const CardOrders = ({ order, products, userRole }) => {
                   alt={product.model}
                 />
                 <div className="flex flex-col justify-between">
-                  <h2 className="font-semibold text-lg">{product.model}</h2>
+                    <h2 className="font-semibold text-lg">{product.model}</h2>
                   <p className="text-gray-600">{product.brand}</p>
                   <span className="font-bold text-red-600">
                     R${" "}
