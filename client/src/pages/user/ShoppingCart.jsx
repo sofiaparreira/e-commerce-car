@@ -99,7 +99,7 @@ const ShoppingCart = () => {
         if (!response.ok) {
             throw new Error("Erro ao confirmar pedido");
         }
-
+//teste
         const data = await response.json();
         console.log("Pedido confirmado:", data);
 
