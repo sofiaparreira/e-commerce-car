@@ -110,7 +110,7 @@ const ShoppingCart = () => {
         console.error("Falha ao confirmar o pedido:", error);
     }
 }
-
+// teste
   return (
     <div>
       <NavBar/>
